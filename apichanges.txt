@@ -1,0 +1,5 @@
+Account_id now required to establish connections
+-- EndeveBase::init(API_KEY, account_id) now has two parameters instead of only one.
+
+ID is now a string:
+-- EndeveModel::find(string) now searches for a Model with that ID and returns a EndeveModel object.
