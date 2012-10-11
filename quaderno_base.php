@@ -1,31 +1,32 @@
 <?php
 class QuadernoBase {
 
-  const TESTING_URL = 'http://localhost:3000/';
+  const DEBUG_URL = 'http://localhost:3000/';
   const PRODUCTION_URL = "https://www.quaderno.com/";
   protected static $API_KEY = null;
   protected static $ACCOUNT_ID = null;
   protected static $URL = null;
 
-  static function init($key, $account_id, $testing=false) {
+  static function init($key, $account_id, $debug=false) {
     self::$API_KEY = $key;
     self::$ACCOUNT_ID = $account_id;
-    self::$URL = $testing ? self::TESTING_URL : self::PRODUCTION_URL;
+    self::$URL = $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
   }
 
   static function responseIsValid($response) {
-    return isset($response) && !$response[
-    'error'] && intval($response['http_code']/100) == 2;
+    return isset($response) &&
+            !$response['error'] &&
+            intval($response['http_code']/100) == 2;
   }
 
   static function findByID($model, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
-    return QuadernoJSON::get($url, self::$API_KEY, "foo");
+    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
   static function find($model) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . ".json";
-    return QuadernoJSON::get($url, self::$API_KEY, "foo");
+    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
   static function save($model, $data, $id) {
@@ -33,10 +34,10 @@ class QuadernoBase {
 
     if ($id) {
       $url .= "/" . $id . ".json";      
-      $return = QuadernoJSON::update($url, self::$API_KEY, "foo", $data);
+      $return = QuadernoJSON::exec($url, "PUT", self::$API_KEY, "foo", $data);
     } else {
       $url .= ".json";
-      $return = QuadernoJSON::create($url, self::$API_KEY, "foo", $data);
+      $return = QuadernoJSON::exec($url, "POST", self::$API_KEY, "foo", $data);
     }
 
     return $return;
@@ -45,7 +46,7 @@ class QuadernoBase {
   static function delete($model, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
 
-    return QuadernoJSON::delete($url, self::$API_KEY, "foo");    
+    return QuadernoJSON::exec($url, "DELETE", self::$API_KEY, "foo", null);    
   }
 
 }
