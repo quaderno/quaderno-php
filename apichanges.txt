@@ -3,3 +3,5 @@ Account_id now required to establish connections
 
 ID is now a string:
 -- QuadernoModel::find(string) now searches for a Model with that ID and returns a QuadernoModel object.
+
+only works in php 5.3

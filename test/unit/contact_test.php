@@ -23,14 +23,17 @@ class ContactTest extends UnitTestCase {
                                  'last_name' => 'Brin'));
     $this->assertTrue($contact->save());
     $this->assertClone(QuadernoContact::find($contact->id), $contact);
+    $id = $contact->id;
     $this->assertTrue($contact->delete());
+    $this->assertNull($contact->id);
+    $this->assertFalse(QuadernoContact::find($id));
   }
 
   // Search by name
   /*function testFindContactWithNonExistingNameReturnsFalse() {
     $result = QuadernoContact::find(array('full_name' => 'Tim Cook'));
     $this->assertFalse($result);
-  }*/
+  }
 
   function testFindContactWithNameReturnsAContact() {
     $contact = new QuadernoContact(array(

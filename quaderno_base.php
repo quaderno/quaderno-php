@@ -23,7 +23,7 @@ class QuadernoBase {
     return QuadernoJSON::get($url, self::$API_KEY, "foo");
   }
 
-  static function find($model, $query) {
+  static function find($model) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . ".json";
     return QuadernoJSON::get($url, self::$API_KEY, "foo");
   }
