@@ -1,6 +1,7 @@
 <?php
-class EndeveModel {
+class QuadernoModel {
   protected $data = array();
+  protected $id = null;
   
   function __construct($newdata) {
     if (is_array($newdata)) $this->data = $newdata;
@@ -13,5 +14,9 @@ class EndeveModel {
   public function __get($name) {
     return array_key_exists($name, $this->data) ? $this->data[$name] : null;
   }
+
+  /*public function save() {
+
+  }*/
 }
 ?>
