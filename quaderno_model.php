@@ -1,7 +1,6 @@
 <?php
 class QuadernoModel {
   protected $data = array();
-  protected $id = null;
   
   function __construct($newdata) {
     if (is_array($newdata)) $this->data = $newdata;

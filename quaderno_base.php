@@ -32,12 +32,20 @@ class QuadernoBase {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model;
 
     if ($id) {
-      $url .= "/" . $id . ".json";
-      QuadernoJSON::update($url, self::$API_KEY, "foo", $data);
+      $url .= "/" . $id . ".json";      
+      $return = QuadernoJSON::update($url, self::$API_KEY, "foo", $data);
     } else {
       $url .= ".json";
-      QuadernoJSON::create($url, self::$API_KEY, "foo", $data);
+      $return = QuadernoJSON::create($url, self::$API_KEY, "foo", $data);
     }
+
+    return $return;
+  }
+
+  static function delete($model, $id) {
+    $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
+
+    return QuadernoJSON::delete($url, self::$API_KEY, "foo");    
   }
 
 }

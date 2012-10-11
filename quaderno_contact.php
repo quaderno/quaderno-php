@@ -28,7 +28,27 @@ class QuadernoContact extends QuadernoModel {
   }
 
   public function save() {
-    
+    $return = false;
+    $response = QuadernoBase::save(self::MODEL, $this->data, $this->id);
+
+    if (QuadernoBase::responseIsValid($response)) {
+      $return = true;      
+      $this->data = $response['data'];      
+    }
+
+    return $return;
+  }
+
+  public function delete() {
+    $return = false;
+    $response = QuadernoBase::delete(self::MODEL, $this->id);
+
+    if (QuadernoBase::responseIsValid($response)) {
+      $return = true;
+      $this->data = array();
+    }
+
+    return $return;
   }
 
 

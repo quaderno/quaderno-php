@@ -1,8 +1,6 @@
 <?php
 class ContactTest extends UnitTestCase { 
-  function __construct() {    
-    //$contact = QuadernoContact::find('Tim Cook');
-    //if (isset($contact)) $contact->delete();
+  function __construct() {
   }  
 
   // Search last contacts
@@ -29,29 +27,32 @@ class ContactTest extends UnitTestCase {
   }
 
   // Search by name
-  function testFindContactWithNonExistingNameReturnsFalse() {
-    $this->assertFalse(QuadernoContact::find('Tim Cook'));
-  }
+  /*function testFindContactWithNonExistingNameReturnsFalse() {
+    $result = QuadernoContact::find(array('full_name' => 'Tim Cook'));
+    $this->assertFalse($result);
+  }*/
 
   function testFindContactWithNameReturnsAContact() {
     $contact = new QuadernoContact(array(
-                                 'first_name' => 'Joseph',
-                                 'last_name' => 'Tribbiani'));
+                                 'full_name' => 'Joseph Tribbiani',
+                                 'contact_name' => 'Ismuser'));    
     $this->assertTrue($contact->save());
-    $contact->first_name = 'Joey';
+    $id = $contact->id;
+    $contact->contact_name = 'Joey';
     $this->assertTrue($contact->save());
-    $this->assertClone(QuadernoContact::find('Joey'), $contact);
     $this->assertTrue($contact->delete());
+    $this->assertNull($contact->id);
+    $this->assertFalse($contact::find($id));
   }
 
   // Search by properties
-  function testFindContactWithWrongPropertiesReturnsFalse() {
+  /*function testFindContactWithWrongPropertiesReturnsFalse() {
     $this->assertFalse(QuadernoContact::find(array('superhero' => 'robin')));
   }
 
   function testFindContactWithPropertiesReturnsArray() {
     $this->assertTrue(is_array(QuadernoContact::find(array('page' => 2))));
-  }
+  }*/
 
 }
 ?>
