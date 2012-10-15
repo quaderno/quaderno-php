@@ -29,6 +29,24 @@ abstract class QuadernoModel extends QuadernoClass {
   // Returns true or false whether the request is accepted or not
   public function save() {
     $return = false;
+    $response = null;
+
+    // Check if there are payments stored not yet created
+    if (isset(static::$paymentsArray)) {
+      foreach ($paymentsArray as $index => $p) {    
+        if (!isset($p->id)) {
+          $response = QuadernoBase::saveNested(static::$MODEL, $this->id, 'payments', $p); 
+          $p->id = $response['data']['id'];
+        }
+        if ($p->markToDelete) {
+          $deleteResponse = QuadernoBase::deleteNested(static::$MODEL, $this->id, 'payments', $p->id); 
+          if (QuadernoBase::responseIsValid($deleteResponse)) unset($paymentsArray[$index]);
+        }
+      }
+
+      if (QuadernoBase::responseIsValid($response)) $this->data = $response['data'];
+    } 
+
     $response = QuadernoBase::save(static::$MODEL, $this->data, $this->id);
 
     if (QuadernoBase::responseIsValid($response)) {

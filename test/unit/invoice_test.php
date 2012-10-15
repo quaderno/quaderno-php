@@ -44,7 +44,6 @@ class InvoiceTest extends UnitTestCase {
   function testCreatingInvoiceReturningItAndDeletingIt() {
     $invoice = new QuadernoInvoice(array(
                                  'number' => '00015',
-                                 'issue_date' => date('2012-10-10'),
                                  'subject' => 'Quaderno',
                                  'notes' => 'Yeah',
                                  'currency' => 'EUR'));

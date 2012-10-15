@@ -1,9 +1,11 @@
 <?php
 abstract class QuadernoDocument extends QuadernoModel {
+  protected $paymentsArray = array();
 
   public function addContact($contact) {
-    $this->data["contacts"] = $contact->getArray();
-    return isset($this->data["contacts"]);
+    $this->data["contact_id"] = $contact->id;
+    $this->data["contact_name"] = $contact->contact_name;
+    return isset($this->data["contact_id"]) && isset($this->data["contact_name"]);
   }
 
   public function addItem($item) {
@@ -12,10 +14,17 @@ abstract class QuadernoDocument extends QuadernoModel {
     return count($this->data["items"]) == $length+1;
   }
 
-  protected function execAddPayment($payment) {
-    $length = isset($this->data["payments"]) ? count($this->data["payments"]) : 0;
-    $this->data["payments"][$length] = $payment->getArray();
-    return count($this->data["payments"] == $length+1);
+  protected function execAddPayment($payment) {    
+    array_push($this->paymentsArray, $payment);
+  }
+
+  protected function execGetPayments() {
+    return $this->paymentsArray;
+  }
+
+  protected function execRemovePayment($payment) {
+    $p = array_search($payment, $paymentsArray, true);
+    $p->markToDelete = true;
   }
 
   //// Deliver call for QuadernoDocument objects
@@ -32,5 +41,6 @@ abstract class QuadernoDocument extends QuadernoModel {
 
     return $return;
   }
+
 }
 ?>

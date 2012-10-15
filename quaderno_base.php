@@ -29,6 +29,10 @@ abstract class QuadernoBase {
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
+  static function saveNested($parentmodel, $parentid, $model, $data) {
+    return self::save($parentmodel . "/" . $parentid . "/" . $model, $data);
+  }
+
   static function save($model, $data, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model;
 
@@ -41,6 +45,10 @@ abstract class QuadernoBase {
     }
 
     return $return;
+  }
+
+  static function deleteNested($parentmodel, $parentid, $model, $id) {
+    return self::delete($parentmodel . "/" . $parentid . "/" . $model, $id);
   }
 
   static function delete($model, $id) {
