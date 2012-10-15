@@ -29,33 +29,16 @@ class ContactTest extends UnitTestCase {
     $this->assertFalse(QuadernoContact::find($id));
   }
 
-  // Search by name
-  /*function testFindContactWithNonExistingNameReturnsFalse() {
-    $result = QuadernoContact::find(array('full_name' => 'Tim Cook'));
-    $this->assertFalse($result);
-  }
-
-  function testFindContactWithNameReturnsAContact() {
+  function testCreatingAndModifyingContact() {
     $contact = new QuadernoContact(array(
-                                 'full_name' => 'Joseph Tribbiani',
-                                 'contact_name' => 'Ismuser'));    
+                                 'first_name' => 'Joseph',
+                                 'last_name' => 'Tribbiani'));
     $this->assertTrue($contact->save());
-    $id = $contact->id;
-    $contact->contact_name = 'Joey';
-    $this->assertTrue($contact->save());
+    $this->assertEqual($contact->full_name, 'Joseph Tribbiani');
+    $contact->first_name = 'Joey';
+    $this->assertTrue($contact->save());    
+    $this->assertEqual($contact->full_name, 'Joey Tribbiani');
     $this->assertTrue($contact->delete());
-    $this->assertNull($contact->id);
-    $this->assertFalse($contact::find($id));
   }
-
-  // Search by properties
-  /*function testFindContactWithWrongPropertiesReturnsFalse() {
-    $this->assertFalse(QuadernoContact::find(array('superhero' => 'robin')));
-  }
-
-  function testFindContactWithPropertiesReturnsArray() {
-    $this->assertTrue(is_array(QuadernoContact::find(array('page' => 2))));
-  }*/
-
 }
 ?>

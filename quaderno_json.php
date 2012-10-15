@@ -1,5 +1,5 @@
 <?php
-class QuadernoJSON {
+abstract class QuadernoJSON {
   static function exec($url, $method, $username, $password, $data=null) {
     // Initialization
     $ch = curl_init($url);

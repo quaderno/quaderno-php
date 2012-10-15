@@ -1,5 +1,5 @@
 <?php
-class QuadernoBase {
+abstract class QuadernoBase {
 
   const DEBUG_URL = 'http://localhost:3000/';
   const PRODUCTION_URL = "https://www.quaderno.com/";
@@ -47,6 +47,12 @@ class QuadernoBase {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
 
     return QuadernoJSON::exec($url, "DELETE", self::$API_KEY, "foo", null);    
+  }
+
+  static function deliver($model, $id) {
+    $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . "/deliver.json";
+
+    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
 }

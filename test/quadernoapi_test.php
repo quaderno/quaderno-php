@@ -10,9 +10,10 @@ class QuadernoApiTest extends TestSuite {
     parent::__construct();
     QuadernoBase::init(self::API_KEY, self::ACCOUNT_ID, true);
 
-    $this->addFile('unit/contact_test.php');
-    //$this->addFile('unit/invoice_test.php');
-    //$this->addFile('unit/item_test.php');
+    //$this->addFile('unit/contact_test.php');
+    $this->addFile('unit/invoice_test.php');
+    //$this->addFile('unit/expense_test.php');
+    //$this->addFile('unit/estimate_test.php');
   }
 }
 ?>
