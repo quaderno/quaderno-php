@@ -2,6 +2,15 @@
 abstract class QuadernoDocument extends QuadernoModel {
   protected $paymentsArray = array();
 
+  function __construct($newdata) {
+    parent::__construct($newdata);
+    if (isset($this->data['payments'])) {
+      foreach ($this->data['payments'] as $p) {        
+        array_push($this->paymentsArray, new QuadernoPayment($p));
+      }
+    }
+  }
+
   public function addContact($contact) {
     $this->data["contact_id"] = $contact->id;
     $this->data["contact_name"] = $contact->contact_name;
@@ -14,8 +23,11 @@ abstract class QuadernoDocument extends QuadernoModel {
     return count($this->data["items"]) == $length+1;
   }
 
+  // Interface - only subclasses which implement original ones (i.e. without exec-)
+  // can call these methods
   protected function execAddPayment($payment) {    
-    array_push($this->paymentsArray, $payment);
+    $length = count($this->paymentsArray);
+    return array_push($this->paymentsArray, $payment) == $length+1;
   }
 
   protected function execGetPayments() {
@@ -23,8 +35,9 @@ abstract class QuadernoDocument extends QuadernoModel {
   }
 
   protected function execRemovePayment($payment) {
-    $p = array_search($payment, $paymentsArray, true);
-    $p->markToDelete = true;
+    $i = array_search($payment, $this->paymentsArray, true);
+    if ($i >= 0) $this->paymentsArray[$i]->markToDelete = true;
+    return ($i >= 0);
   }
 
   //// Deliver call for QuadernoDocument objects

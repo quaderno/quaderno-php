@@ -13,9 +13,8 @@ abstract class QuadernoClass {
   public function __get($name) {
     return array_key_exists($name, $this->data) ? $this->data[$name] : null;
   }
-
-  // CAMBIAR POR PROTECTED!!!!!!!
-  public function getArray() {
+  
+  protected function getArray() {
     return $this->data;
   }
 

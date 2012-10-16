@@ -11,12 +11,7 @@ class PaymentTest extends UnitTestCase {
                                    'description' => 'concepto 1',
                                    'price' => 100.0,
                                    'quantity' => 20
-                                   ));
-
-    $this->payment = new QuadernoPayment(array(                                         
-                                         'date' => date('2012-10-10'),
-                                         'payment_method' => 'credit_card'
-                                         ));
+                                   ));        
   }
 
   function testCreatingDocumentAndAddingPayment() {
@@ -26,12 +21,22 @@ class PaymentTest extends UnitTestCase {
                                  'notes' => 'Test execution',
                                  'currency' => 'EUR'));
 
+    $payment = new QuadernoPayment(array(                                         
+                                         'date' => date('2012-10-10'),
+                                         'payment_method' => 'credit_card'
+                                         ));
+
     $expense->addContact($this->contacts[0]);    
     $expense->addItem($this->item);
     $this->assertTrue($expense->save());    
-    $expense->addPayment($this->payment);
-    $this->assertTrue($expense->save());
-    $this->assertClone(QuadernoExpense::find($expense->id), $expense);
+    $expense->addPayment($payment);    
+    $this->assertTrue($expense->save());    
+    $exp = QuadernoExpense::find($expense->id);
+    /////////
+    $exp->correctAmount();
+    $expense->correctUrl();    
+    /////////
+    $this->assertClone($exp, $expense);
     $this->assertTrue($expense->delete());
   }
 
@@ -42,31 +47,62 @@ class PaymentTest extends UnitTestCase {
                                  'notes' => 'Test execution',
                                  'currency' => 'EUR'));
 
+    $payment = new QuadernoPayment(array(                                         
+                                         'date' => date('2012-10-10'),
+                                         'payment_method' => 'credit_card'
+                                         ));
+
     $expense->addContact($this->contacts[0]);    
     $expense->addItem($this->item);
-    $expense->addPayment($this->payment);
+    $expense->addPayment($payment);
     $this->assertTrue($expense->save());
-    $this->assertClone(QuadernoExpense::find($expense->id), $expense);
+    $exp = QuadernoExpense::find($expense->id);
+    /////////
+    $exp->correctAmount();
+    $expense->correctUrl();
+    /////////
+    $this->assertClone($exp, $expense);
     $this->assertTrue($expense->delete());
   }
 
-  function testSearchingForPaymentAndDeletingIt() {
+  function testCreatingDocumentWithTwoPayments() {
     $expense = new QuadernoExpense(array(
                                  'number' => '00013',
                                  'subject' => 'Testing Quaderno API',
                                  'notes' => 'Test execution',
                                  'currency' => 'EUR'));
 
+    $payment = new QuadernoPayment(array(                                         
+                                     'date' => date('2012-10-10'),
+                                     'payment_method' => 'credit_card'
+                                     ));
+
+    $payment2 = new QuadernoPayment(array(                                         
+                                     'date' => date('2012-10-12'),
+                                     'payment_method' => 'credit_card'
+                                     ));
+
     $expense->addContact($this->contacts[0]);    
     $expense->addItem($this->item);
-    $expense->addPayment($this->payment);
-    $expense->addPayment($this->payment2);
-    $this->assertTrue($expense->save());    
+    $expense->addPayment($payment);
+    $expense->addPayment($payment2);
+    $this->assertTrue($expense->save());
+    $exp = QuadernoExpense::find($expense->id);    
+    /////////    
+    $exp->correctAmount();
+    $expense->correctUrl();
+    ////////
+    $this->assertClone($exp, $expense);
+
 
     $payments = $expense->getPayments();
-    $this->assertTrue($expense->removePayment($payments[1]));
+    $this->assertTrue($expense->removePayment($payments[0]));
     $this->assertTrue($expense->save());
-    $this->assertClone(QuadernoExpense::find($expense->id), $expense);
+    $exp = QuadernoExpense::find($expense->id);    
+    ///////////
+    $exp->correctAmount();
+    ///////////
+    $this->assertClone($exp, $expense);
     $this->assertTrue($expense->delete());
   }
 }

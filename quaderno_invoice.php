@@ -3,19 +3,19 @@ class QuadernoInvoice extends QuadernoDocument {
   static protected $MODEL = 'invoices';
 
   public function deliver() {
-    $this->execDeliver();
+    return $this->execDeliver();
   }
 
   public function addPayment($payment) {
-    $this->execAddPayment($payment);
+    return $this->execAddPayment($payment);
   }
 
   public function getPayments() {
-    $this->execGetPayments();
+    return $this->execGetPayments();
   }
 
   public function removePayment($payment) {
-    $this->execRemovePayment($payment);
+    return $this->execRemovePayment($payment);
   }
   
 }

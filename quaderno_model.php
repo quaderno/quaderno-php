@@ -9,10 +9,12 @@ abstract class QuadernoModel extends QuadernoClass {
     $class = get_called_class();
 
     if (isset($id)) {
+      // Searching for an ID
       $response = QuadernoBase::findByID(static::$MODEL, $id);      
       if (QuadernoBase::responseIsValid($response)) $return = new $class($response['data']);
     }
     else {
+      // Searching array of objects
       $response = QuadernoBase::find(static::$MODEL);
 
       if (QuadernoBase::responseIsValid($response)) {
@@ -27,31 +29,68 @@ abstract class QuadernoModel extends QuadernoClass {
   //// Save for QuadernoModel objects
   // Export object data to the model
   // Returns true or false whether the request is accepted or not
-  public function save() {
-    $return = false;
+  public function save() {    
     $response = null;
+    $newobject = false;    
+    $return = false;
 
-    // Check if there are payments stored not yet created
-    if (isset(static::$paymentsArray)) {
-      foreach ($paymentsArray as $index => $p) {    
-        if (!isset($p->id)) {
-          $response = QuadernoBase::saveNested(static::$MODEL, $this->id, 'payments', $p); 
-          $p->id = $response['data']['id'];
-        }
+    ////////// 1st step - New object to be created
+
+    // Check if the current object has not been created yet
+    if (is_null($this->id)) {
+      // Not yet created, let's do it
+      $response = QuadernoBase::save(static::$MODEL, $this->data, $this->id);
+      $newobject = true;
+
+
+      // Update data with the response
+      if (QuadernoBase::responseIsValid($response)) {        
+        $this->data = $response['data'];
+        $return = true;
+      }
+    }
+
+    $response = null;
+    $newdata = false;
+
+    /////////// 2nd step - Payments to be created
+
+    // Check if there are any payments stored and not yet created
+    if (isset($this->paymentsArray) && count($this->paymentsArray)) {
+
+      foreach ($this->paymentsArray as $index => $p) {        
+        if (is_null($p->id)) {
+          // The payment does not have ID -> Not yet created
+          $response = QuadernoBase::saveNested(static::$MODEL, $this->id, 'payments', $p->data);
+          if (QuadernoBase::responseIsValid($response)) {
+            $p->data = $response['data'];
+            $newdata = self::find($this->id);
+          }
+        }        
         if ($p->markToDelete) {
+          // The payment is marked to delete -> Let's do it.
           $deleteResponse = QuadernoBase::deleteNested(static::$MODEL, $this->id, 'payments', $p->id); 
-          if (QuadernoBase::responseIsValid($deleteResponse)) unset($paymentsArray[$index]);
+          if (QuadernoBase::responseIsValid($deleteResponse)) {            
+            array_splice($this->paymentsArray, $index, 1);
+          }
         }
       }
 
-      if (QuadernoBase::responseIsValid($response)) $this->data = $response['data'];
-    } 
+      // If this object has received new data, let's update data field.
+      if ($newdata) $this->data = $newdata->data;
+    }
 
-    $response = QuadernoBase::save(static::$MODEL, $this->data, $this->id);
+    ////////// 3rd step - Update object
 
-    if (QuadernoBase::responseIsValid($response)) {
-      $return = true;
-      $this->data = $response['data'];
+    // Update object - This is only necessary when it's not a new object,
+    // or new payments have been created.
+    if (!$newobject || $newdata) {
+      $response = QuadernoBase::save(static::$MODEL, $this->data, $this->id);
+
+      if (QuadernoBase::responseIsValid($response)) {
+        $return = true;
+        $this->data = $response['data'];      
+      }
     }
 
     return $return;
