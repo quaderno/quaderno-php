@@ -1,4 +1,5 @@
 <?php
+/* Interface for every model */
 abstract class QuadernoModel extends QuadernoClass {
   //// Find for QuadernoModel objects
   // If $id is passed, it returns a single object

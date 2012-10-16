@@ -15,12 +15,7 @@ class QuadernoExpense extends QuadernoDocument {
   }
 
   // THESE TWO FUNCTIONS ARE HERE ONLY TO SOLVE TEST PROBLEMS
-  // CAUSE OF A BUG IN THE API. REMOVE AFTER SOLVED.
-  public function correctAmount() {
-    foreach ($this->paymentsArray as $p) {
-      $p->amount = "$0.00";
-    }
-  }
+  // CAUSE OF A BUG IN THE API. REMOVE AFTER SOLVED.  
   public function correctUrl() {
     foreach ($this->paymentsArray as $p) {            
       $str = 'expenses';

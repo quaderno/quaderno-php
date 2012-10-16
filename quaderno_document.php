@@ -1,4 +1,6 @@
 <?php
+/* Interface that implements every Document
+This is, invoices, expenses and estimates */
 abstract class QuadernoDocument extends QuadernoModel {
   protected $paymentsArray = array();
 
@@ -47,12 +49,16 @@ abstract class QuadernoDocument extends QuadernoModel {
     $return = false;
     $response = QuadernoBase::deliver(static::$MODEL, $this->id);
 
-    if (QuadernoBase::responseIsValid($response)) {
-      $return = true;
-      if (isset($response['data'])) $this->data = $response['data'];
-    }
+    return QuadernoBase::responseIsValid($response);
+  }
 
-    return $return;
+
+
+  // BORRAR UNA VEZ ARREGLADO EL BUG
+  public function correctAmount() {
+    foreach ($this->paymentsArray as $p) {
+      $p->amount = "$0.00";
+    }
   }
 
 }

@@ -5,6 +5,7 @@ class ExpenseTest extends UnitTestCase {
   private $payment = null;
 
   function __construct() {
+    // General items to use
     $this->contacts = QuadernoContact::find();
 
     $this->item = new QuadernoItem(array(
@@ -35,7 +36,7 @@ class ExpenseTest extends UnitTestCase {
                                  'notes' => 'This should fail'));
     $expense->addContact($this->contacts[0]);
     $expense->addPayment($this->payment);
-    $this->assertFalse($expense->save());
+    $this->assertFalse($expense->save()); // Impossible to create doc w/o items
   }
 
   function testCreatingExpenseReturningItAndDeletingIt() {

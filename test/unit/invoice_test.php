@@ -1,13 +1,11 @@
 <?php
 class InvoiceTest extends UnitTestCase { 
-  private $contact = null;
+  private $contacts = null;
   private $item = null;
   private $payment = null;
 
   function __construct() {
-    $this->contact = new QuadernoContact(array(
-                         'first_name' => 'Chuck',
-                         'last_name' => 'Norris'));
+    $this->contacts = QuadernoContact::find();
 
     $this->item = new QuadernoItem(array(
                                    'description' => 'concepto 1',
@@ -15,10 +13,9 @@ class InvoiceTest extends UnitTestCase {
                                    'quantity' => 20
                                    ));
 
-    $this->payment = new QuadernoPayment(array(
-                                         'amount' => 300,
+    $this->payment = new QuadernoPayment(array(                                         
                                          'date' => date('2012-10-10'),
-                                         'payment_method' => 'Transfer'
+                                         'payment_method' => 'credit_card'
                                          ));
   }  
 
@@ -29,37 +26,36 @@ class InvoiceTest extends UnitTestCase {
 
   // Search by ID
   function testFindInvoiceWithInvalidIdReturnsFalse() {
-    $this->assertFalse(QuadernoInvoice::find("0"));
+    $this->assertFalse(QuadernoInvoice::find("Invalid Id"));
   }
 
   function testCreatingAnInvoiceWithNoItemsReturnFalse() {
     $invoice = new QuadernoInvoice(array(
-                                 'subject' => 'Quaderno',
-                                 'notes' => 'Yeah'));
-    $invoice->addContact($this->contact);
+                                 'subject' => 'Failing test Quaderno',
+                                 'notes' => 'This should fail'));
+    $invoice->addContact($this->contacts[0]);
     $invoice->addPayment($this->payment);
-    $this->assertFalse($invoice->save());
+    $this->assertFalse($invoice->save()); // Impossible to create doc w/o items
   }
 
   function testCreatingInvoiceReturningItAndDeletingIt() {
     $invoice = new QuadernoInvoice(array(
-                                 'number' => '00015',
-                                 'subject' => 'Quaderno',
-                                 'notes' => 'Yeah',
-                                 'currency' => 'EUR'));
-    $invoice->addContact($this->contact);
-    $this->assertFalse($invoice->save());
+                                 'subject' => 'Testing Quaderno API',
+                                 'notes' => 'Test execution',
+                                 'currency' => 'EUR'));        
+    $invoice->addContact($this->contacts[0]);
+    $this->assertFalse($invoice->save()); // Impossible to create doc w/o items
     $invoice->addItem($this->item);
     $invoice->addItem($this->item);
-    $invoice->addItem($this->item);
-    $invoice->addPayment($this->payment);
-    echo "Prueba: " . var_dump($invoice->getArray()) . "<br/><br/>";
-    $this->assertTrue($invoice->save());
-    /*$this->assertClone(QuadernoInvoice::find($invoice->id), $invoice);
     $invoice->addItem($this->item);
     $this->assertTrue($invoice->save());
+    $this->assertClone(QuadernoInvoice::find($invoice->id), $invoice);
+    $invoice->notes = 'Changing notes!';
+    $this->assertTrue($invoice->save());
+    $this->assertEqual('Changing notes!', $invoice->notes);
     $this->assertTrue($invoice->deliver());
-    $this->assertTrue($invoice->delete());*/
-  }
+    $this->assertTrue($invoice->delete());
+  }  
+
 }
 ?>

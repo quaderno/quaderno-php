@@ -1,17 +1,16 @@
 <?php
+// REINICIAR BD !
 class EstimateTest extends UnitTestCase { 
   private $contact = null;
   private $item = null;
 
   function __construct() {
-    $this->contact = new QuadernoContact(array(
-                         'first_name' => 'Chuck',
-                         'last_name' => 'Norris'));
+    $this->contacts = QuadernoContact::find();
 
     $this->item = new QuadernoItem(array(
-                                   'description': 'concepto 1',
-                                   'price': 100.0,
-                                   'quantity': 20
+                                   'description' => 'concepto 1',
+                                   'price' => 100.0,
+                                   'quantity' => 20
                                    ));
   }  
 
@@ -22,34 +21,36 @@ class EstimateTest extends UnitTestCase {
 
   // Search by ID
   function testFindEstimateWithInvalidIdReturnsFalse() {
-    $this->assertFalse(QuadernoEstimate::find("0"));
+    $this->assertFalse(QuadernoEstimate::find("pericopalotes"));
   }
 
   function testCreatingAnEstimateWithNoItemsReturnFalse() {
     $estimate = new QuadernoEstimate(array(
                                  'subject' => 'Quaderno',
                                  'notes' => 'Yeah'));
-    $estimate->addContact($this->contact);
-    $this->assertFalse($estimate->save());
+    $estimate->addContact($this->contacts[0]);
+    $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
   }
 
   function testCreatingEstimateReturningItAndDeletingIt() {
     $estimate = new QuadernoEstimate(array(
                                  'subject' => 'Quaderno',
-                                 'notes' => 'Yeah'));
-    $estimate->addContact($this->contact);
-    $this->assertFalse($estimate->save());
+                                 'notes' => 'Yeah',
+                                 'currency' => 'EUR'));
+    $estimate->addContact($this->contacts[0]);
+    $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
     $estimate->addItem($this->item);
     $estimate->addItem($this->item);
     $estimate->addItem($this->item);
     $this->assertTrue($estimate->save());
     $this->assertClone(QuadernoEstimate::find($estimate->id), $estimate);
-    $this->assertTrue($invoice->deliver());
+    //$this->assertFalse($estimate->deliver());         //////////// ACTIVAR!
+    $this->contacts[0]->email = "jorge@recrea.es";
+    $this->assertTrue($this->contacts[0]->save());
+    $this->assertTrue($estimate->deliver());
     $this->assertTrue($estimate->delete());
   }
 
-  function testFindEstimateWithInvalidIdReturnsFalse() {
-    $this->assertFalse(QuadernoEstimate::find("pericopalotes"));
-  }
+  
 }
 ?>

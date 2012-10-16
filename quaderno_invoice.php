@@ -17,6 +17,5 @@ class QuadernoInvoice extends QuadernoDocument {
   public function removePayment($payment) {
     return $this->execRemovePayment($payment);
   }
-  
 }
 ?>

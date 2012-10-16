@@ -1,4 +1,6 @@
 <?php
+/* General interface that implements the calls
+ to the message coding and transport library */
 abstract class QuadernoBase {
 
   const DEBUG_URL = 'http://localhost:3000/';

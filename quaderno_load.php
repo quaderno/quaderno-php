@@ -1,4 +1,6 @@
 <?php
+/* Interfae to load every needed file.
+  This is the ONLY file to include from external code */
 require_once('quaderno_class.php');
 require_once('quaderno_model.php');
 require_once('quaderno_base.php');

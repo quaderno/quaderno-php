@@ -1,4 +1,5 @@
 <?php
+/* Interface that implements every single class */
 abstract class QuadernoClass {
   protected $data = array();  
   
