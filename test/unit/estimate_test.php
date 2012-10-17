@@ -37,7 +37,7 @@ class EstimateTest extends UnitTestCase {
                                  'subject' => 'Quaderno',
                                  'notes' => 'Yeah'));
     $estimate->addContact($this->contact);
-    $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
+    $this->assertFalse($estimate->save()); // Impossible to create doc w/o items    
   }
 
   function testCreatingEstimateReturningItAndDeletingIt() {

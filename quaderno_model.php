@@ -20,7 +20,7 @@ abstract class QuadernoModel extends QuadernoClass {
 
       if (QuadernoBase::responseIsValid($response)) {
         $return = array();
-        for ($i=0; $i<count($response['data']); $i++) $return[$i] = new $class($response['data'][$i]);          
+        for ($i=0; $i<count($response['data']); $i++) $return[$i] = new $class($response['data'][$i]);
       }
     }
 
@@ -49,6 +49,7 @@ abstract class QuadernoModel extends QuadernoClass {
         $this->data = $response['data'];
         $return = true;
       }
+      elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
     }
 
     $response = null;
@@ -67,6 +68,7 @@ abstract class QuadernoModel extends QuadernoClass {
             $p->data = $response['data'];
             $newdata = self::find($this->id);
           }
+          elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
         }        
         if ($p->markToDelete) {
           // The payment is marked to delete -> Let's do it.
@@ -74,6 +76,7 @@ abstract class QuadernoModel extends QuadernoClass {
           if (QuadernoBase::responseIsValid($deleteResponse)) {            
             array_splice($this->paymentsArray, $index, 1);
           }
+          elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
         }
       }
 
@@ -90,8 +93,9 @@ abstract class QuadernoModel extends QuadernoClass {
 
       if (QuadernoBase::responseIsValid($response)) {
         $return = true;
-        $this->data = $response['data'];      
+        $this->data = $response['data'];
       }
+      elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
     }
 
     return $return;
@@ -108,6 +112,7 @@ abstract class QuadernoModel extends QuadernoClass {
       $return = true;
       $this->data = array();
     }
+    elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
 
     return $return;
   }

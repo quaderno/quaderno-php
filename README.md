@@ -25,7 +25,7 @@ QuadernoBase::init('YOUR_API_KEY', 'YOUR_ACCOUNT_ID');
 
 ### Testing connection
 ```php
-QuadernoBase::ping();                         // Returns N seconds (success) or false (error)
+QuadernoBase::ping();                         // Returns true (success) or false (error)
 ```
 
 
@@ -46,6 +46,13 @@ $contact = new QuadernoContact(array(
                                  'contact_name' => 'Joey'));
 
 $contact->save();                             // Returns true (success) or false (error)
+
+$contact->first_name = "";
+$contact->save();                             // Returns false - first_name is a required field
+foreach($contact->errors as $field => $errors) { 
+  print "{$field}: ";
+  foreach ($errors as $e) print $e;
+}
 
 $contact->first_name = 'Joey';
 $contact->save();

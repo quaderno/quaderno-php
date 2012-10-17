@@ -31,8 +31,11 @@ class ContactTest extends UnitTestCase {
                                  'last_name' => 'Tribbiani'));
     $this->assertTrue($contact->save());
     $this->assertEqual($contact->full_name, 'Joseph Tribbiani');
-    $contact->first_name = 'Joey';
-    $this->assertTrue($contact->save());    
+    $contact->first_name = "";
+    $this->assertFalse($contact->save());   // Fails because 'first_name' field is required
+    $this->assertNotNull($contact->errors["first_name"]);
+    $contact->first_name = "Joey";
+    $this->assertTrue($contact->save());
     $this->assertEqual($contact->full_name, 'Joey Tribbiani');
     $this->assertTrue($contact->delete());
   }

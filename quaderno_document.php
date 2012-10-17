@@ -49,7 +49,10 @@ abstract class QuadernoDocument extends QuadernoModel {
     $return = false;
     $response = QuadernoBase::deliver(static::$MODEL, $this->id);
 
-    return QuadernoBase::responseIsValid($response);
+    if (QuadernoBase::responseIsValid($response)) $return = true;
+    elseif (isset($response['data']['errors'])) $this->errors = $response['data']['errors'];
+
+    return $return;
   }
 
 }
