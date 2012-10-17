@@ -16,14 +16,14 @@ abstract class QuadernoBase {
   }
  
 
-  static function deleteNested($parentmodel, $parentid, $model, $id) {
-    return self::delete($parentmodel . "/" . $parentid . "/" . $model, $id);
-  }
-
   static function delete($model, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
 
     return QuadernoJSON::exec($url, "DELETE", self::$API_KEY, "foo", null);    
+  }
+
+  static function deleteNested($parentmodel, $parentid, $model, $id) {
+    return self::delete($parentmodel . "/" . $parentid . "/" . $model, $id);
   }
 
   static function deliver($model, $id) {

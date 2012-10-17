@@ -13,14 +13,5 @@ class QuadernoExpense extends QuadernoDocument {
   public function removePayment($payment) {
     return $this->execRemovePayment($payment);
   }
-
-  // THESE TWO FUNCTIONS ARE HERE ONLY TO SOLVE TEST PROBLEMS
-  // CAUSE OF A BUG IN THE API. REMOVE AFTER SOLVED.  
-  public function correctUrl() {
-    foreach ($this->paymentsArray as $p) {            
-      $str = 'expenses';
-      $p->url = substr_replace($p->url, $str, 40, strlen('invoices'));      
-    }
-  }
 }
 ?>

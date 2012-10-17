@@ -1,17 +1,25 @@
 <?php
-// REINICIAR BD !
 class EstimateTest extends UnitTestCase { 
   private $contact = null;
   private $item = null;
 
   function __construct() {
-    $this->contacts = QuadernoContact::find();
+    // General items and contacts to use
+    $this->contact = new QuadernoContact(array(
+                                 'first_name' => 'Joseph',
+                                 'last_name' => 'Tribbiani',
+                                 'contact_name' => 'Friends Staff'));
+    $this->contact->save();
 
     $this->item = new QuadernoItem(array(
                                    'description' => 'concepto 1',
                                    'price' => 100.0,
                                    'quantity' => 20
                                    ));
+  }
+
+  function __destruct() {
+    $this->contact->delete();
   }  
 
   // Search last estimates
@@ -28,7 +36,7 @@ class EstimateTest extends UnitTestCase {
     $estimate = new QuadernoEstimate(array(
                                  'subject' => 'Quaderno',
                                  'notes' => 'Yeah'));
-    $estimate->addContact($this->contacts[0]);
+    $estimate->addContact($this->contact);
     $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
   }
 
@@ -37,20 +45,21 @@ class EstimateTest extends UnitTestCase {
                                  'subject' => 'Quaderno',
                                  'notes' => 'Yeah',
                                  'currency' => 'EUR'));
-    $estimate->addContact($this->contacts[0]);
+    $estimate->addContact($this->contact);
     $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
     $estimate->addItem($this->item);
     $estimate->addItem($this->item);
     $estimate->addItem($this->item);
     $this->assertTrue($estimate->save());
     $this->assertClone(QuadernoEstimate::find($estimate->id), $estimate);
-    //$this->assertFalse($estimate->deliver());         //////////// ACTIVAR!
-    $this->contacts[0]->email = "jorge@recrea.es";
-    $this->assertTrue($this->contacts[0]->save());
+
+    // Impossible to deliver when the contact doesn't have an e-mail address
+    $this->assertFalse($estimate->deliver());
+    $this->contact->email = "joseph.tribbiani@friends.com";
+    $this->assertTrue($this->contact->save());
     $this->assertTrue($estimate->deliver());
     $this->assertTrue($estimate->delete());
   }
-
   
 }
 ?>

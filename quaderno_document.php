@@ -52,14 +52,5 @@ abstract class QuadernoDocument extends QuadernoModel {
     return QuadernoBase::responseIsValid($response);
   }
 
-
-
-  // BORRAR UNA VEZ ARREGLADO EL BUG
-  public function correctAmount() {
-    foreach ($this->paymentsArray as $p) {
-      $p->amount = "$0.00";
-    }
-  }
-
 }
 ?>

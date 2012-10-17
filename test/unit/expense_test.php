@@ -1,24 +1,26 @@
 <?php
 class ExpenseTest extends UnitTestCase { 
-  private $contacts = null;
-  private $item = null;
-  private $payment = null;
+  private $contact = null;
+  private $item = null;  
 
   function __construct() {
-    // General items to use
-    $this->contacts = QuadernoContact::find();
+    // General items and contacts to use
+    $this->contact = new QuadernoContact(array(
+                                 'first_name' => 'Joseph',
+                                 'last_name' => 'Tribbiani',
+                                 'contact_name' => 'Friends Staff'));
+    $this->contact->save();
 
     $this->item = new QuadernoItem(array(
                                    'description' => 'concepto 1',
                                    'price' => 100.0,
                                    'quantity' => 20
                                    ));
+  }
 
-    $this->payment = new QuadernoPayment(array(                                         
-                                         'date' => date('2012-10-10'),
-                                         'payment_method' => 'credit_card'
-                                         ));
-  }  
+  function __destruct() {
+    $this->contact->delete();
+  }
 
   // Search last expenses
   function testFindExpenseReturnsArray() {
@@ -34,8 +36,7 @@ class ExpenseTest extends UnitTestCase {
     $expense = new QuadernoExpense(array(
                                  'subject' => 'Failing test Quaderno',
                                  'notes' => 'This should fail'));
-    $expense->addContact($this->contacts[0]);
-    $expense->addPayment($this->payment);
+    $expense->addContact($this->contact);
     $this->assertFalse($expense->save()); // Impossible to create doc w/o items
   }
 
@@ -45,7 +46,7 @@ class ExpenseTest extends UnitTestCase {
                                  'subject' => 'Testing Quaderno API',
                                  'notes' => 'Test execution',
                                  'currency' => 'EUR'));        
-    $expense->addContact($this->contacts[0]);
+    $expense->addContact($this->contact);
     $this->assertFalse($expense->save());
     $expense->addItem($this->item);
     $expense->addItem($this->item);

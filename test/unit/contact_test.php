@@ -13,10 +13,6 @@ class ContactTest extends UnitTestCase {
     $this->assertFalse(QuadernoContact::find("0"));
   }
 
-  function testFindExistingID() {
-    $this->assertTrue(QuadernoContact::find("50758a232f412e144700001c") instanceof QuadernoContact);
-  }
-
   function testFindContactWithIdReturnsAContact() {
     $contact = new QuadernoContact(array(
                                  'first_name' => 'Sergey',
