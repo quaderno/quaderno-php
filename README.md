@@ -5,6 +5,7 @@ This library is a PHP wrapper to connect and handle the [Quaderno API] (https://
 You will need this if you want to connect to the Quaderno API from your PHP application with no need to be handling annoying low-level HTTP requests and JSON-encoded data.
 
 ## Requirements
+* PHP 5
 * [cURL] (http://php.net/manual/en/book.curl.php) (included by default in recent PHP versions)
 
 ## Installation

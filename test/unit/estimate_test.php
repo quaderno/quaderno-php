@@ -34,17 +34,17 @@ class EstimateTest extends UnitTestCase {
 
   function testCreatingAnEstimateWithNoItemsReturnFalse() {
     $estimate = new QuadernoEstimate(array(
-                                 'subject' => 'Quaderno',
-                                 'notes' => 'Yeah'));
+                                 'subject' => 'Failing test Quaderno',
+                                 'notes' => 'This should fail'));
     $estimate->addContact($this->contact);
     $this->assertFalse($estimate->save()); // Impossible to create doc w/o items    
   }
 
   function testCreatingEstimateReturningItAndDeletingIt() {
     $estimate = new QuadernoEstimate(array(
-                                 'subject' => 'Quaderno',
-                                 'notes' => 'Yeah',
-                                 'currency' => 'EUR'));
+                                 'subject' => 'Testing Quaderno API',
+                                 'notes' => 'Test execution',
+                                 'currency' => 'EUR'));   
     $estimate->addContact($this->contact);
     $this->assertFalse($estimate->save()); // Impossible to create doc w/o items
     $estimate->addItem($this->item);
