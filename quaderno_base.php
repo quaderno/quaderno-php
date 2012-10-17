@@ -15,6 +15,12 @@ abstract class QuadernoBase {
     self::$URL = $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
   }
  
+  static function ping() {
+    $url = self::$URL . self::$ACCOUNT_ID . '/api/v1/ping.json';
+    $response = QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
+    
+    return self::responseIsValid($response);
+  }
 
   static function delete($model, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
@@ -40,7 +46,7 @@ abstract class QuadernoBase {
   static function findByID($model, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . "/" . $id . ".json";
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
-  }
+  } 
 
   static function save($model, $data, $id) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model;
