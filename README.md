@@ -35,7 +35,7 @@ QuadernoBase::ping();                         // Returns true (success) or false
 Returns _false_ if request fails.
 ```php
 $contacts = QuadernoContact::find();          // Returns an array of QuadernoContact
-$contact = EndeveContact::find('IDTOFIND');   // Returns a QuadernoContact
+$contact = QuadernoContact::find('IDTOFIND');   // Returns a QuadernoContact
 ```
 
 #### Creating and updating a contact
