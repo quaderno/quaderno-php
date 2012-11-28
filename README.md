@@ -30,15 +30,15 @@ QuadernoBase::ping();                         // Returns true (success) or false
 ```
 
 
-### :: Contacts
-#### Find contacts
+### Contacts
+#### -- Find contacts
 Returns _false_ if request fails.
 ```php
 $contacts = QuadernoContact::find();          // Returns an array of QuadernoContact
 $contact = QuadernoContact::find('IDTOFIND');   // Returns a QuadernoContact
 ```
 
-#### Creating and updating a contact
+#### -- Creating and updating a contact
 ```php
 $contact = new QuadernoContact(array(
                                  'first_name' => 'Joseph',
@@ -60,16 +60,16 @@ $contact->save();
 ```
 
 
-### :: Documents
+### Documents
 A document is either an _invoice_, an _expense_ or an _estimate_.
 
-#### Find documents
+#### -- Find documents
 ```php
 $invoices = QuadernoInvoice::find();          // Returns an array of QuadernoInvoice
 $invoice = QuadernoInvoice::find("IDTOFIND"); // Returns a QuadernoInvoice
 ```
 
-#### Create and update a document
+#### -- Create and update a document
 ```php
 $estimate = new QuadernoEstimate(array(
                                  'subject' => 'Business website',
@@ -82,7 +82,7 @@ $estimate->notes = 'Finally, no mobile version will be necessary';
 $estimate->save();
 ```
 
-#### Deliver a document
+#### -- Deliver a document
 Only possible in invoices and estimates. The contact must have an email address defined.
 ```php
 $invoice->deliver();                          // Return true (success) or false (error)
@@ -90,8 +90,8 @@ $invoice->deliver();                          // Return true (success) or false 
 ```
 
 
-### :: Payments
-#### Add a payment to a document
+### Payments
+#### -- Add a payment to a document
 Only possible in invoices and expenses. Input should be a QuadernoPayment object.
 ```php
 $payment = new QuadernoPayment(array(                                         
@@ -102,12 +102,12 @@ $invoice->addPayment($payment);               // Return true (success) or false 
 $invoice->save();                             // Returns true (success) or false (error)
 ```
 
-#### Get payments of a document
+#### -- Get payments of a document
 ```php
 $payments = $expense->getPayments();          // Returns an array of QuadernoPayment
 ```
 
-#### Remove a payment from a document
+#### -- Remove a payment from a document
 ```php
 $expense->removePayment($payments[2]);         // Return true (success) or false (error)
 ```
