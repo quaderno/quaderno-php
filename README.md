@@ -1,5 +1,5 @@
 # PHP Wrapper for Quaderno API
-This library is a PHP wrapper to connect and handle the [Quaderno API] (https://github.com/recrea/quaderno-api) in a nicer way. It connects to your account in quaderno.com, so you will need to have a valid account to use it.
+This library is a PHP wrapper to connect and handle the [Quaderno API] (https://github.com/recrea/quaderno-api) in a nicer way. It connects to your account in quaderno.io, so you will need to have a valid account to use it.
 
 ## Why using it?
 You will need this if you want to connect to the Quaderno API from your PHP application with no need to be handling annoying low-level HTTP requests and JSON-encoded data.
@@ -121,7 +121,7 @@ Remember this is only a PHP wrapper for the original API. If you want more infor
 ## License
 (The MIT License)
 
-Copyright © 2012 recreahq.com
+Copyright © 2013 recreahq.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
