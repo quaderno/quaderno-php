@@ -34,8 +34,9 @@ QuadernoBase::ping();                         // Returns true (success) or false
 #### -- Find contacts
 Returns _false_ if request fails.
 ```php
-$contacts = QuadernoContact::find();          // Returns an array of QuadernoContact
-$contact = QuadernoContact::find('IDTOFIND');   // Returns a QuadernoContact
+$contacts = QuadernoContact::find();                    // Returns an array of QuadernoContact
+$contacts = QuadernoContact::find(array('page' => 2));  // Returns an array of QuadernoContact
+$contact = QuadernoContact::find('IDTOFIND');           // Returns a QuadernoContact
 ```
 
 #### -- Creating and updating a contact
@@ -65,8 +66,9 @@ A document is either an _invoice_, an _expense_ or an _estimate_.
 
 #### -- Find documents
 ```php
-$invoices = QuadernoInvoice::find();          // Returns an array of QuadernoInvoice
-$invoice = QuadernoInvoice::find("IDTOFIND"); // Returns a QuadernoInvoice
+$invoices = QuadernoInvoice::find();                      // Returns an array of QuadernoInvoice
+$invoices = QuadernoInvoice::find(array('page' => 2));    // Returns an array of QuadernoInvoice
+$invoice = QuadernoInvoice::find("IDTOFIND");             // Returns a QuadernoInvoice
 ```
 
 #### -- Create and update a document

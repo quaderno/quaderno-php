@@ -2,21 +2,20 @@
 /* Interface for every model */
 abstract class QuadernoModel extends QuadernoClass {
   //// Find for QuadernoModel objects
-  // If $id is passed, it returns a single object
-  // If $id is not passed, it returns an array of objects
+  // If $params is a single value, it returns a single object
+  // If $params is null or an array, it returns an array of objects
   // When request fails, it returns false
-  static function find($id=null) {
+  static function find($params=array('page' => 1)) {
     $return = false;
     $class = get_called_class();
-
-    if (isset($id)) {
+    
+    if (!is_array($params)) {
       // Searching for an ID
-      $response = QuadernoBase::findByID(static::$MODEL, $id);      
+      $response = QuadernoBase::findByID(static::$MODEL, $params);      
       if (QuadernoBase::responseIsValid($response)) $return = new $class($response['data']);
     }
     else {
-      // Searching array of objects
-      $response = QuadernoBase::find(static::$MODEL);
+      $response = QuadernoBase::find(static::$MODEL, $params);
 
       if (QuadernoBase::responseIsValid($response)) {
         $return = array();

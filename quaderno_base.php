@@ -4,7 +4,7 @@
 abstract class QuadernoBase {
 
   const DEBUG_URL = 'http://localhost:3000/';
-  const PRODUCTION_URL = "https://app.quaderno.io/";
+  const PRODUCTION_URL = "http://beta.endeve.com/";
   protected static $API_KEY = null;
   protected static $ACCOUNT_ID = null;
   protected static $URL = null;
@@ -38,8 +38,14 @@ abstract class QuadernoBase {
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
-  static function find($model) {
+  static function find($model, $params=null) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . ".json";
+    if (isset($params)) {
+      foreach ($params as $key => $value) {
+        $encodeQuery.= urlencode($key) . '=' . urlencode($value) . '&';
+      }
+      $url .= "?" . $encodeQuery;
+    }
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   } 
 
