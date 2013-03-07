@@ -41,6 +41,7 @@ abstract class QuadernoBase {
   static function find($model, $params=null) {
     $url = self::$URL . self::$ACCOUNT_ID . "/api/v1/" . $model . ".json";
     if (isset($params)) {
+      $encodeQuery = '';
       foreach ($params as $key => $value) {
         $encodeQuery.= urlencode($key) . '=' . urlencode($value) . '&';
       }
