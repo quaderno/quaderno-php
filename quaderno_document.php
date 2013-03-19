@@ -20,9 +20,9 @@ abstract class QuadernoDocument extends QuadernoModel {
   }
 
   public function addItem($item) {
-    $length = isset($this->data["items"]) ? count($this->data["items"]) : 0;
-    $this->data["items"][$length] = $item->getArray();
-    return count($this->data["items"]) == $length+1;
+    $length = isset($this->data["items_attributes"]) ? count($this->data["items_attributes"]) : 0;
+    $this->data["items_attributes"][$length] = $item->getArray();
+    return count($this->data["items_attributes"]) == $length+1;
   }
 
   // Interface - only subclasses which implement original ones (i.e. without exec-)
