@@ -4,7 +4,7 @@
 abstract class QuadernoBase {
 
   const DEBUG_URL = 'http://localhost:3000/';
-  const PRODUCTION_URL = "http://beta.endeve.com/";
+  const PRODUCTION_URL = "https://quadernoapp.com/";
   protected static $API_KEY = null;
   protected static $ACCOUNT_ID = null;
   protected static $URL = null;
