@@ -11,7 +11,7 @@ class EstimateTest extends UnitTestCase {
                                  'contact_name' => 'Friends Staff'));
     $this->contact->save();
 
-    $this->item = new QuadernoItem(array(
+    $this->item = new QuadernoDocumentItem(array(
                                    'description' => 'concepto 1',
                                    'price' => 100.0,
                                    'quantity' => 20
@@ -42,6 +42,7 @@ class EstimateTest extends UnitTestCase {
 
   function testCreatingEstimateReturningItAndDeletingIt() {
     $estimate = new QuadernoEstimate(array(
+                                 'number' => 'Awesome test number',
                                  'subject' => 'Testing Quaderno API',
                                  'notes' => 'Test execution',
                                  'currency' => 'EUR'));   

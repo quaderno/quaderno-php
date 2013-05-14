@@ -11,7 +11,7 @@ class PaymentTest extends UnitTestCase {
                                  'contact_name' => 'Friends Staff'));
     $this->contact->save();
 
-    $this->item = new QuadernoItem(array(
+    $this->item = new QuadernoDocumentItem(array(
                                    'description' => 'concepto 1',
                                    'price' => 100.0,
                                    'quantity' => 20
