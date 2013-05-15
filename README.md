@@ -59,12 +59,17 @@ foreach($contact->errors as $field => $errors) {
 $contact->first_name = 'Joey';
 $contact->save();
 ```
-
-
-#### -- Creating and updating an item
-
+### Items
 The items are those products or services that you sell to your customers.
 
+#### -- Find contacts
+Returns _false_ if request fails.
+```php
+$items = QuadernoItem::find();                    // Returns an array of QuadernoItem
+$items = QuadernoItem::find('IDTOFIND');           // Returns a QuadernoItem
+```
+
+#### -- Creating and updating an item
 ```php
 $item = new QuadernoItem(array(
                                  'name' => 'Jelly pizza',
@@ -85,7 +90,7 @@ foreach($item->errors as $field => $errors) {
 $item->name = 'Jelly Pizza';
 $item->tax_2_name = 'FOODTAX';
 $item->tax_2_rate = '70.77';
-$contact->save();
+$item->save();
 ```
 
 
