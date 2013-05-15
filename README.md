@@ -61,6 +61,35 @@ $contact->save();
 ```
 
 
+#### -- Creating and updating an item
+
+The items are those products or services that you sell to your customers.
+
+```php
+$item = new QuadernoItem(array(
+                                 'name' => 'Jelly pizza',
+                                 'code' => 'Yummy',
+                                 'unit_cost' => '15.00',
+                                 'tax_1_name' => 'JUNKTAX',
+                                 'tax_1_rate' => '99.99'));
+
+$item->save();                             // Returns true (success) or false (error)
+
+$item->name = "";
+$item->save();                             // Returns false - name is a required field
+foreach($item->errors as $field => $errors) { 
+  print "{$field}: ";
+  foreach ($errors as $e) print $e;
+}
+
+$item->name = 'Jelly Pizza';
+$item->tax_2_name = 'FOODTAX';
+$item->tax_2_rate = '70.77';
+$contact->save();
+```
+
+
+
 ### Documents
 A document is either an _invoice_, an _expense_ or an _estimate_.
 

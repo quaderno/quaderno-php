@@ -1,4 +1,5 @@
 <?php
-class QuadernoItem extends QuadernoClass {
+class QuadernoItem extends QuadernoModel {
+  static protected $MODEL = 'items';
 }
 ?>
