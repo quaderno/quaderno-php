@@ -62,7 +62,7 @@ $contact->save();
 ### Items
 The items are those products or services that you sell to your customers.
 
-#### -- Find contacts
+#### -- Find items
 Returns _false_ if request fails.
 ```php
 $items = QuadernoItem::find();                    // Returns an array of QuadernoItem
