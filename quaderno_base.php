@@ -14,6 +14,13 @@ abstract class QuadernoBase {
     self::$ACCOUNT_ID = $account_id;
     self::$URL = $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
   }
+
+  static function authorization($key, $debug=false){
+    $url =  $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
+    $url = $url . 'subdomain' . '/api/v1/authorization.json';
+    $response = QuadernoJSON::exec($url, "GET", $key, "foo", null);
+    return $response['data'];
+  }
  
   static function ping() {
     $url = self::$URL . self::$ACCOUNT_ID . '/api/v1/ping.json';

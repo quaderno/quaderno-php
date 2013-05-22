@@ -29,6 +29,24 @@ QuadernoBase::init('YOUR_API_KEY', 'YOUR_ACCOUNT_ID');
 QuadernoBase::ping();                         // Returns true (success) or false (error)
 ```
 
+### Getting the authorization info
+```php
+QuadernoBase::authorization('YOUR_API_KEY');                         // Returns an array with your 
+```
+
+Example response
+
+```php
+array(
+  "identity" => array(
+    "id" => 1,
+    "name" => "James Earl Jones",
+    "email" => "im@your.father",
+    "href" => "https://quadernoapp.com/blackhelmet/api/v1/",
+  ),
+)
+
+```
 
 ### Contacts
 #### -- Find contacts
@@ -148,6 +166,34 @@ $payments = $expense->getPayments();          // Returns an array of QuadernoPay
 $expense->removePayment($payments[2]);         // Return true (success) or false (error)
 ```
 
+### webhooks
+
+#### -- Find webhooks
+Returns _false_ if request fails.
+```php
+$webhooks = QuadernoWebhook::find();                    // Returns an array of QuadernoWebhook
+$webhooks = QuadernoWebhook::find('IDTOFIND');           // Returns a QuadernoWebhook
+```
+
+#### -- Creating and updating an webhook
+```php
+$webhook = new QuadernoWebhook(array(
+                                 'url' => 'http://myapp.com/notifications',
+                                 'events' => array('created'));
+
+$webhook->save();                             // Returns true (success) or false (error)
+
+$webhook->name = "";
+$webhook->save();                             // Returns false - name is a required field
+foreach($webhook->errors as $field => $errors) { 
+  print "{$field}: ";
+  foreach ($errors as $e) print $e;
+}
+
+$webhook->url = 'http://anotherapp.com/quaderno/notifications';
+$webhook->events = array('created', 'updated', 'deleted');
+$webhook->save();
+```
 
 ## More information
 Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original API documentation.
