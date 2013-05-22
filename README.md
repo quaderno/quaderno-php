@@ -33,8 +33,7 @@ QuadernoBase::ping();                         // Returns true (success) or false
 ```php
 QuadernoBase::authorization('YOUR_API_KEY');                         // Returns an array with your 
 ```
-
-Example response
+Example response:
 
 ```php
 array(
