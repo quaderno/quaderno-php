@@ -182,8 +182,8 @@ $webhook = new QuadernoWebhook(array(
 
 $webhook->save();                             // Returns true (success) or false (error)
 
-$webhook->name = "";
-$webhook->save();                             // Returns false - name is a required field
+$webhook->url = "";
+$webhook->save();                             // Returns false - url is a required field
 foreach($webhook->errors as $field => $errors) { 
   print "{$field}: ";
   foreach ($errors as $e) print $e;
