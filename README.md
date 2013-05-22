@@ -31,7 +31,7 @@ QuadernoBase::ping();                         // Returns true (success) or false
 
 ### Getting the authorization info
 ```php
-QuadernoBase::authorization('YOUR_API_KEY');                         // Returns an array with your 
+QuadernoBase::authorization('YOUR_API_KEY');                  // Returns an array with your information
 ```
 Example response:
 
