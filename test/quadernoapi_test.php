@@ -3,8 +3,9 @@ require_once('simpletest/autorun.php');
 require_once('../quaderno_load.php');
 
 class QuadernoApiTest extends TestSuite {
-  const API_KEY = 'n8sDLUZ5z1d6dYXKixnx';
-  const ACCOUNT_ID = 'recrea';
+  # please use your own api_key and account_id
+  const API_KEY = 'xxxxxxxxxxxxxxxxxxxx';
+  const ACCOUNT_ID = 'xxxxxx';
 
   function __construct() {
     parent::__construct();
