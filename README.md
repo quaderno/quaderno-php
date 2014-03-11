@@ -30,6 +30,9 @@ QuadernoBase::ping();                         // Returns true (success) or false
 ```
 
 ### Getting the authorization info
+
+You can get your account subdomain by grabbing it from your account url or by calling the authorization method with your personal api token.
+
 ```php
 QuadernoBase::authorization('YOUR_API_KEY');                  // Returns an array with your information
 ```
