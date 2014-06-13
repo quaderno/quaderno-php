@@ -3,20 +3,20 @@
  to the message coding and transport library */
 abstract class QuadernoBase {
 
-  const DEBUG_URL = 'http://localhost:3000/';
+  const SANDBOX_URL = 'http://sandbox-quadernoapp.com/';
   const PRODUCTION_URL = "https://quadernoapp.com/";
   protected static $API_KEY = null;
   protected static $ACCOUNT_ID = null;
   protected static $URL = null;
 
-  static function init($key, $account_id, $debug=false) {
+  static function init($key, $account_id, $sandbox=false) {
     self::$API_KEY = $key;
     self::$ACCOUNT_ID = $account_id;
-    self::$URL = $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
+    self::$URL = $sandbox ? self::SANDBOX_URL : self::PRODUCTION_URL;
   }
 
-  static function authorization($key, $debug=false){
-    $url =  $debug ? self::DEBUG_URL : self::PRODUCTION_URL;
+  static function authorization($key, $sandbox=false){
+    $url =  $sandbox ? self::SANDBOX_URL : self::PRODUCTION_URL;
     $url = $url . 'subdomain' . '/api/v1/authorization.json';
     $response = QuadernoJSON::exec($url, "GET", $key, "foo", null);
     return $response['data'];
