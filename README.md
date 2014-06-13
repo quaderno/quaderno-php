@@ -21,10 +21,9 @@ require_once 'quaderno_load.php';
 
 ### Setup
 ```php
-QuadernoBase::init('YOUR_API_KEY', 'YOUR_ACCOUNT_ID', [$sandbox]);
-
- `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production.  
+QuadernoBase::init('YOUR_API_KEY', 'YOUR_ACCOUNT_ID', $sandbox);
 ```
+`$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production. 
 
 ### Testing connection
 ```php
@@ -36,10 +35,11 @@ QuadernoBase::ping();                         // Returns true (success) or false
 You can get your account subdomain by grabbing it from your account url or by calling the authorization method with your personal api token.
 
 ```php
-QuadernoBase::authorization('YOUR_API_KEY', [$sandbox]);                  // Returns an array with your information
- 
- `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production.  
+QuadernoBase::authorization('YOUR_API_KEY', $sandbox);                  // Returns an array with your information
 ```
+
+ `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production.  
+ 
 Example response:
 
 ```php
