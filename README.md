@@ -21,7 +21,7 @@ require_once 'quaderno_load.php';
 
 ### Setup
 ```php
-QuadernoBase::init('YOUR_API_KEY', 'YOUR_ACCOUNT_ID', $sandbox);
+QuadernoBase::init('YOUR_API_KEY', 'YOUR_SUBDOMAIN', $sandbox);
 ```
 `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production. 
 
