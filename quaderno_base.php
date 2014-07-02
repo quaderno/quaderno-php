@@ -17,20 +17,20 @@ abstract class QuadernoBase {
 
   static function authorization($key, $sandbox=false){
     $url =  $sandbox ? self::SANDBOX_URL : self::PRODUCTION_URL;
-    $url = $url . '/api/v1/authorization.json';
+    $url = $url . 'api/v1/authorization.json';
     $response = QuadernoJSON::exec($url, "GET", $key, "foo", null);
     return $response['data'];
   }
  
   static function ping() {
-    $url = self::$URL . '/api/v1/ping.json';
+    $url = self::$URL . 'api/v1/ping.json';
     $response = QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
     
     return self::responseIsValid($response);
   }
 
   static function delete($model, $id) {
-    $url = self::$URL . "/api/v1/" . $model . "/" . $id . ".json";
+    $url = self::$URL . "api/v1/" . $model . "/" . $id . ".json";
 
     return QuadernoJSON::exec($url, "DELETE", self::$API_KEY, "foo", null);    
   }
@@ -40,13 +40,13 @@ abstract class QuadernoBase {
   }
 
   static function deliver($model, $id) {
-    $url = self::$URL . "/api/v1/" . $model . "/" . $id . "/deliver.json";
+    $url = self::$URL . "api/v1/" . $model . "/" . $id . "/deliver.json";
 
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   }
 
   static function find($model, $params=null) {
-    $url = self::$URL . "/api/v1/" . $model . ".json";
+    $url = self::$URL . "api/v1/" . $model . ".json";
     if (isset($params)) {
       $encodeQuery = '';
       foreach ($params as $key => $value) {
@@ -58,12 +58,12 @@ abstract class QuadernoBase {
   } 
 
   static function findByID($model, $id) {
-    $url = self::$URL . "/api/v1/" . $model . "/" . $id . ".json";
+    $url = self::$URL . "api/v1/" . $model . "/" . $id . ".json";
     return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
   } 
 
   static function save($model, $data, $id) {
-    $url = self::$URL . "/api/v1/" . $model;
+    $url = self::$URL . "api/v1/" . $model;
 
     if ($id) {
       $url .= "/" . $id . ".json";      
