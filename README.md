@@ -132,9 +132,16 @@ $invoice = QuadernoInvoice::find("IDTOFIND");             // Returns a QuadernoI
 #### -- Create and update a document
 ```php
 $estimate = new QuadernoEstimate(array(
-                                 'subject' => 'Business website',
                                  'notes' => 'With mobile version',
                                  'currency' => 'EUR'));
+
+$item = new QuadernoDocumentItem(array(
+                                  'description' => 'Pizza bagles',
+                                  'unit_price' => 9.99,
+                                  'quantity' => 20));  //Keep in mind that a QuadernoDocumentItem is not a QuadernoItem
+
+$estimate->addItem($item);
+$estimate->addContact($contact);
 
 $estimate->save();                            // Returns true (success) or false (error)
 
