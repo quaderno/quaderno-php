@@ -15,7 +15,7 @@ abstract class QuadernoDocument extends QuadernoModel {
 
   public function addContact($contact) {
     $this->data["contact_id"] = $contact->id;
-    $this->data["contact_name"] = $contact->contact_name;
+    $this->data["contact_name"] = $contact->full_name;
     return isset($this->data["contact_id"]) && isset($this->data["contact_name"]);
   }
 
