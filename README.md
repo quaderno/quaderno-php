@@ -25,6 +25,9 @@ QuadernoBase::init('YOUR_API_KEY', 'YOUR_SUBDOMAIN', $sandbox);
 ```
 `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production. 
 
+NOTE: sanbox environment is a different account that you must to create at http://www.sandbox-quadernoapp.com/signup
+Remember to generate a sanbox environment API_KEY
+
 ### Testing connection
 ```php
 QuadernoBase::ping();                         // Returns true (success) or false (error)
