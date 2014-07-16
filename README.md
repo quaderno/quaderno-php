@@ -132,6 +132,12 @@ $invoices = QuadernoInvoice::find(array('page' => 2));    // Returns an array of
 $invoice = QuadernoInvoice::find("IDTOFIND");             // Returns a QuadernoInvoice
 ```
 
+Note: In order to looking up for  number, contact name or P.O. number fields, you must set the 'q' param in the array param.
+#### -- Find documents
+```php
+$invoices = QuadernoInvoice::find(array('q' => $my_po_number));    // Search filtering 
+```
+
 #### -- Create and update a document
 ```php
 $estimate = new QuadernoEstimate(array(
