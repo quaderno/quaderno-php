@@ -76,6 +76,15 @@ abstract class QuadernoBase {
     return $return;
   }
 
+  static function calculate($params){
+    $url = QuadernoBase::$URL . "api/v1/taxes/calculate.json";
+    
+    $encodeQuery = '';
+    foreach ($params as $key => $value) { $encodeQuery.= urlencode($key) . '=' . urlencode($value) . '&';    }
+    $url .= "?" . $encodeQuery;
+    return QuadernoJSON::exec($url, "GET", QuadernoBase::$API_KEY, "foo", null);
+  }
+
   static function saveNested($parentmodel, $parentid, $model, $data) {
     return self::save($parentmodel . "/" . $parentid . "/" . $model, $data, null);
   }

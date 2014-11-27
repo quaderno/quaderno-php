@@ -188,7 +188,7 @@ $payments = $expense->getPayments();          // Returns an array of QuadernoPay
 $expense->removePayment($payments[2]);         // Return true (success) or false (error)
 ```
 
-### webhooks
+### Webhooks
 
 #### -- Find webhooks
 Returns _false_ if request fails.
