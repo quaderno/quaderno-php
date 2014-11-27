@@ -217,6 +217,23 @@ $webhook->events = array('created', 'updated', 'deleted');
 $webhook->save();
 ```
 
+### Taxes
+#### -- Calculating taxes
+
+```php
+$data = array(
+                'country' => 'ES',
+                'postal_code' => '08080',
+                'tax_id' => 'A58818501'
+);
+
+$tax = QuadernoTax::calculate($data);          // Returns a QuadernoTax
+
+$tax->name;  // "VAT"
+$tax->rate; // 21.0
+$tax->notes; // null 
+```
+
 ## More information
 Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original API documentation.
 
