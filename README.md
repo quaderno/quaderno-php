@@ -235,9 +235,7 @@ $tax->notes; // null
 ```
 
 ## More information
-Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original API documentation.
-
-* [API Documentation] (https://github.com/quaderno/quaderno-api)
+Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original [API documentation](https://github.com/quaderno/quaderno-api).
 
 ## License
 (The MIT License)
