@@ -15,24 +15,24 @@ abstract class QuadernoBase {
     self::$URL = self::quadernoHost($subdomain, $sandbox);
   }
 
+  static function apiCall($method, $model, $id='', $params=null, $data=null) {
+    $url = self::$URL . "api/v1/" . $model . ($id != '' ? "/" . $id : '') . ".json";
+    if (isset($params)) $url .= "?" . http_build_query($params);	
+    return QuadernoJSON::exec($url, $method, self::$API_KEY, "foo", $data);    
+  }
+  
   static function authorization($key, $sandbox=false){
-    $url =  $sandbox ? self::SANDBOX_URL : self::PRODUCTION_URL;
-    $url = $url . 'api/v1/authorization.json';
-    $response = QuadernoJSON::exec($url, "GET", $key, "foo", null);
+    self::$URL = $sandbox ? self::SANDBOX_URL : self::PRODUCTION_URL;
+	   $response = self::apiCall("GET", 'authorization');
     return $response['data'];
   }
  
   static function ping() {
-    $url = self::$URL . 'api/v1/ping.json';
-    $response = QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
-    
-    return self::responseIsValid($response);
+    return self::responseIsValid(self::apiCall("GET", 'ping'));
   }
 
   static function delete($model, $id) {
-    $url = self::$URL . "api/v1/" . $model . "/" . $id . ".json";
-
-    return QuadernoJSON::exec($url, "DELETE", self::$API_KEY, "foo", null);    
+    return self::apiCall("DELETE", $model, $id);
   }
 
   static function deleteNested($parentmodel, $parentid, $model, $id) {
@@ -40,49 +40,23 @@ abstract class QuadernoBase {
   }
 
   static function deliver($model, $id) {
-    $url = self::$URL . "api/v1/" . $model . "/" . $id . "/deliver.json";
-
-    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
+    return self::apiCall("GET", $model, $id . '/deliver');
   }
 
   static function find($model, $params=null) {
-    $url = self::$URL . "api/v1/" . $model . ".json";
-    if (isset($params)) {
-      $encodeQuery = '';
-      foreach ($params as $key => $value) {
-        $encodeQuery.= urlencode($key) . '=' . urlencode($value) . '&';
-      }
-      $url .= "?" . $encodeQuery;
-    }
-    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
+	   return self::apiCall("GET", $model, '', $params);
   } 
 
   static function findByID($model, $id) {
-    $url = self::$URL . "api/v1/" . $model . "/" . $id . ".json";
-    return QuadernoJSON::exec($url, "GET", self::$API_KEY, "foo", null);
+	   return self::apiCall("GET", $model, $id);
   } 
 
   static function save($model, $data, $id) {
-    $url = self::$URL . "api/v1/" . $model;
-
-    if ($id) {
-      $url .= "/" . $id . ".json";      
-      $return = QuadernoJSON::exec($url, "PUT", self::$API_KEY, "foo", $data);
-    } else {
-      $url .= ".json";
-      $return = QuadernoJSON::exec($url, "POST", self::$API_KEY, "foo", $data);
-    }
-
-    return $return;
+	   return self::apiCall(($id ? "PUT" : "POST"), $model, $id, null, $data);
   }
 
   static function calculate($params){
-    $url = QuadernoBase::$URL . "api/v1/taxes/calculate.json";
-    
-    $encodeQuery = '';
-    foreach ($params as $key => $value) { $encodeQuery.= urlencode($key) . '=' . urlencode($value) . '&';    }
-    $url .= "?" . $encodeQuery;
-    return QuadernoJSON::exec($url, "GET", QuadernoBase::$API_KEY, "foo", null);
+	   return self::apiCall("GET", 'taxes', 'calculate', $params);
   }
 
   static function saveNested($parentmodel, $parentid, $model, $data) {
@@ -100,4 +74,3 @@ abstract class QuadernoBase {
     return $url;
   }
 }
-?>
