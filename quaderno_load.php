@@ -17,3 +17,4 @@ require_once $quaderno_script_path . 'quaderno_payment.php';
 require_once $quaderno_script_path . 'quaderno_json.php';
 require_once $quaderno_script_path . 'quaderno_webhook.php';
 require_once $quaderno_script_path . 'quaderno_tax.php';
+require_once $quaderno_script_path . 'quaderno_transaction.php';
