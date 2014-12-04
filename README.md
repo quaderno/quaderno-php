@@ -229,12 +229,16 @@ $webhooks = QuadernoTransaction::find('IDTOFIND');           // Returns a Quader
 ```php
 $transaction = new QuadernoTransaction(array(
                                  'country' => 'ES',
-                                 'zip' => '08080'
+                                 'zip' => '35007'
                                  'ip' => '127.0.0.1',
                                  'iin' => '424242',
                                  'amount' => '1200');
 
 $transaction->save();                             // Returns true (success) or false (error)
+
+$transaction->tax_name; //  "IGIC"
+$transaction->total_amount; //  1284
+$transaction->tax_amount;    // 84
 ```
 
 #### -- Deleting a transaction
