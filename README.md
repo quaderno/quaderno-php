@@ -232,7 +232,8 @@ $transaction = new QuadernoTransaction(array(
                                  'zip' => '35007'
                                  'ip' => '127.0.0.1',
                                  'iin' => '424242',
-                                 'amount' => '1200');
+                                 'amount' => '1200',
+                                 'vat_number' => 'X12345678');
 
 $transaction->save();                             // Returns true (success) or false (error)
 
