@@ -217,38 +217,6 @@ $webhook->events = array('created', 'updated', 'deleted');
 $webhook->save();
 ```
 
-### Transactions
-
-#### -- Find transactions
-Returns _false_ if request fails.
-```php
-$webhooks = QuadernoTransaction::find('IDTOFIND');           // Returns a QuadernoTransaction
-```
-
-#### -- Creating a transaction
-```php
-$transaction = new QuadernoTransaction(array(
-                                 'country' => 'ES',
-                                 'zip' => '35007'
-                                 'ip' => '127.0.0.1',
-                                 'iin' => '424242',
-                                 'amount' => '1200',
-                                 'vat_number' => 'X12345678');
-
-$transaction->save();                             // Returns true (success) or false (error)
-
-$transaction->tax_name; //  "IGIC"
-$transaction->total_amount; //  1284
-$transaction->tax_amount;    // 84
-```
-
-#### -- Deleting a transaction
-```php
-$transaction = QuadernoTransaction::find(6);
-$transaction->delete();                  // Returns true (success) or false (error)
-
-```
-
 
 ### Taxes
 #### -- Calculating taxes
