@@ -21,44 +21,16 @@ require_once 'quaderno_load.php';
 
 ### Setup
 ```php
-QuadernoBase::init('YOUR_API_KEY', 'YOUR_SUBDOMAIN', $sandbox);
+QuadernoBase::init('YOUR_API_KEY', 'YOUR_API_URL');
 ```
-`$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production. 
-
-NOTE: sanbox environment is a different account that you must to create at http://www.sandbox-quadernoapp.com/signup
-Remember to generate a sanbox environment API_KEY
 
 ### Testing connection
 ```php
-QuadernoBase::ping();                         // Returns true (success) or false (error)
-```
-
-### Getting the authorization info
-
-You can get your account subdomain by grabbing it from your account url or by calling the authorization method with your personal api token.
-
-```php
-QuadernoBase::authorization('YOUR_API_KEY', $sandbox);                  // Returns an array with your information
-```
-
- `$sandbox` is an optional boolean argument, by setting it to `true` you will hit the sandbox server and not your live data in production.  
- 
-Example response:
-
-```php
-array(
-  "identity" => array(
-    "id" => 1,
-    "name" => "James Earl Jones",
-    "email" => "im@your.father",
-    "href" => "https://blackhelmet.quadernoapp.com/api/v1/",
-  ),
-)
-
+QuadernoBase::ping();   // Returns true (success) or false (error)
 ```
 
 ### Contacts
-#### -- Find contacts
+#### Find contacts
 Returns _false_ if request fails.
 ```php
 $contacts = QuadernoContact::find();                    // Returns an array of QuadernoContact
@@ -66,7 +38,7 @@ $contacts = QuadernoContact::find(array('page' => 2));  // Returns an array of Q
 $contact = QuadernoContact::find('IDTOFIND');           // Returns a QuadernoContact
 ```
 
-#### -- Creating and updating a contact
+#### Creating and updating a contact
 ```php
 $contact = new QuadernoContact(array(
                                  'first_name' => 'Joseph',
@@ -86,17 +58,128 @@ foreach($contact->errors as $field => $errors) {
 $contact->first_name = 'Joey';
 $contact->save();
 ```
+
+### Documents
+A document is either an _invoice_, an _expense_ or an _estimate_.
+
+#### Find documents
+```php
+$invoices = QuadernoInvoice::find();                      // Returns an array of QuadernoInvoice
+$invoices = QuadernoInvoice::find(array('page' => 2));    // Returns an array of QuadernoInvoice
+$invoice = QuadernoInvoice::find("IDTOFIND");             // Returns a QuadernoInvoice
+```
+
+Note: In order to looking up for number, contact name or P.O. number fields, you must set the 'q' param in the array param.
+
+#### Find documents
+```php
+$invoices = QuadernoInvoice::find(array('q' => $my_po_number));   // Search filtering 
+```
+
+#### Create and update a document
+```php
+$estimate = new QuadernoEstimate(array(
+                                 'notes' => 'With mobile version',
+                                 'currency' => 'EUR'));
+
+$item = new QuadernoDocumentItem(array(
+                                  'description' => 'Pizza bagles',
+                                  'unit_price' => 9.99,
+                                  'quantity' => 20));  //Keep in mind that a QuadernoDocumentItem is not a QuadernoItem
+
+$estimate->addItem($item);
+$estimate->addContact($contact);
+
+$estimate->save();                            // Returns true (success) or false (error)
+
+$estimate->notes = 'Finally, no mobile version will be necessary';
+$estimate->save();
+```
+
+#### Deliver a document
+Only possible in invoices and estimates. The contact must have an email address defined.
+```php
+$invoice->deliver();                          // Return true (success) or false (error)
+
+```
+
+### Payments
+#### Add a payment to a document
+You can add a payment only to invoices and expenses. Input should be a QuadernoPayment object.
+```php
+$payment = new QuadernoPayment(array(                                         
+                                 'date' => date('2012-10-10'),
+                                 'payment_method' => 'credit_card'));
+
+$invoice->addPayment($payment);               // Return true (success) or false (error)
+$invoice->save();                             // Returns true (success) or false (error)
+```
+
+#### Get payments
+```php
+$payments = $expense->getPayments();          // Returns an array of QuadernoPayment
+```
+
+#### Remove a payment
+```php
+$expense->removePayment($payments[2]);         // Return true (success) or false (error)
+```
+
+### Webhooks
+
+#### Find webhooks
+Returns _false_ if request fails.
+```php
+$webhooks = QuadernoWebhook::find();                    // Returns an array of QuadernoWebhook
+$webhooks = QuadernoWebhook::find('IDTOFIND');           // Returns a QuadernoWebhook
+```
+
+#### Creating and updating a webhook
+```php
+$webhook = new QuadernoWebhook(array(
+                                 'url' => 'http://myapp.com/notifications',
+                                 'events' => array('created'));
+
+$webhook->save();                             // Returns true (success) or false (error)
+
+$webhook->url = "";
+$webhook->save();                             // Returns false - url is a required field
+foreach($webhook->errors as $field => $errors) { 
+  print "{$field}: ";
+  foreach ($errors as $e) print $e;
+}
+
+$webhook->url = 'http://anotherapp.com/quaderno/notifications';
+$webhook->events = array('created', 'updated', 'deleted');
+$webhook->save();
+```
+
+### Taxes
+####  Calculating taxes
+
+```php
+$data = array(
+  'country' => 'ES',
+  'postal_code' => '08080',
+  'tax_id' => 'A58818501'
+);
+
+$tax = QuadernoTax::calculate($data);   // Returns a QuadernoTax
+$tax->name;  // "VAT"
+$tax->rate;  // 21.0
+```
+
 ### Items
 The items are those products or services that you sell to your customers.
 
-#### -- Find items
+#### Find items
 Returns _false_ if request fails.
 ```php
 $items = QuadernoItem::find();                    // Returns an array of QuadernoItem
 $items = QuadernoItem::find('IDTOFIND');           // Returns a QuadernoItem
 ```
 
-#### -- Creating and updating an item
+#### Creating and updating an item
 ```php
 $item = new QuadernoItem(array(
                                  'name' => 'Jelly pizza',
@@ -120,128 +203,13 @@ $item->tax_2_rate = '70.77';
 $item->save();
 ```
 
-
-
-### Documents
-A document is either an _invoice_, an _expense_ or an _estimate_.
-
-#### -- Find documents
-```php
-$invoices = QuadernoInvoice::find();                      // Returns an array of QuadernoInvoice
-$invoices = QuadernoInvoice::find(array('page' => 2));    // Returns an array of QuadernoInvoice
-$invoice = QuadernoInvoice::find("IDTOFIND");             // Returns a QuadernoInvoice
-```
-
-Note: In order to looking up for  number, contact name or P.O. number fields, you must set the 'q' param in the array param.
-#### -- Find documents
-```php
-$invoices = QuadernoInvoice::find(array('q' => $my_po_number));    // Search filtering 
-```
-
-#### -- Create and update a document
-```php
-$estimate = new QuadernoEstimate(array(
-                                 'notes' => 'With mobile version',
-                                 'currency' => 'EUR'));
-
-$item = new QuadernoDocumentItem(array(
-                                  'description' => 'Pizza bagles',
-                                  'unit_price' => 9.99,
-                                  'quantity' => 20));  //Keep in mind that a QuadernoDocumentItem is not a QuadernoItem
-
-$estimate->addItem($item);
-$estimate->addContact($contact);
-
-$estimate->save();                            // Returns true (success) or false (error)
-
-$estimate->notes = 'Finally, no mobile version will be necessary';
-$estimate->save();
-```
-
-#### -- Deliver a document
-Only possible in invoices and estimates. The contact must have an email address defined.
-```php
-$invoice->deliver();                          // Return true (success) or false (error)
-
-```
-
-
-### Payments
-#### -- Add a payment to a document
-Only possible in invoices and expenses. Input should be a QuadernoPayment object.
-```php
-$payment = new QuadernoPayment(array(                                         
-                                 'date' => date('2012-10-10'),
-                                 'payment_method' => 'credit_card'));
-
-$invoice->addPayment($payment);               // Return true (success) or false (error)
-$invoice->save();                             // Returns true (success) or false (error)
-```
-
-#### -- Get payments of a document
-```php
-$payments = $expense->getPayments();          // Returns an array of QuadernoPayment
-```
-
-#### -- Remove a payment from a document
-```php
-$expense->removePayment($payments[2]);         // Return true (success) or false (error)
-```
-
-### Webhooks
-
-#### -- Find webhooks
-Returns _false_ if request fails.
-```php
-$webhooks = QuadernoWebhook::find();                    // Returns an array of QuadernoWebhook
-$webhooks = QuadernoWebhook::find('IDTOFIND');           // Returns a QuadernoWebhook
-```
-
-#### -- Creating and updating an webhook
-```php
-$webhook = new QuadernoWebhook(array(
-                                 'url' => 'http://myapp.com/notifications',
-                                 'events' => array('created'));
-
-$webhook->save();                             // Returns true (success) or false (error)
-
-$webhook->url = "";
-$webhook->save();                             // Returns false - url is a required field
-foreach($webhook->errors as $field => $errors) { 
-  print "{$field}: ";
-  foreach ($errors as $e) print $e;
-}
-
-$webhook->url = 'http://anotherapp.com/quaderno/notifications';
-$webhook->events = array('created', 'updated', 'deleted');
-$webhook->save();
-```
-
-
-### Taxes
-#### -- Calculating taxes
-
-```php
-$data = array(
-                'country' => 'ES',
-                'postal_code' => '08080',
-                'tax_id' => 'A58818501'
-);
-
-$tax = QuadernoTax::calculate($data);          // Returns a QuadernoTax
-
-$tax->name;  // "VAT"
-$tax->rate; // 21.0
-$tax->notes; // null 
-```
-
 ## More information
 Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original [API documentation](https://github.com/quaderno/quaderno-api).
 
 ## License
 (The MIT License)
 
-Copyright © 2013-2014 recreahq.com
+Copyright © 2013-2015 Quaderno
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
