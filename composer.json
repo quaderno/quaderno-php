@@ -1,0 +1,26 @@
+{
+  "name": "quaderno/quaderno",
+  "type": "library",
+  "description": "Billing for Stripe",
+  "version": "1.0.0",
+  "keywords": ["billing","receipts", "stripe", "vat"],
+  "homepage": "https://github.com/quaderno/quaderno-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Carlos Hernandez",
+      "email": "carlos@quaderno.io",
+      "homepage": "http://quaderno.io",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+    "Quaderno": ""
+    }
+  }
+}
