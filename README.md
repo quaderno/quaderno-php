@@ -60,7 +60,7 @@ $contact->save();
 ```
 
 ### Documents
-A document is either an _invoice_, an _expense_ or an _estimate_.
+A document is either an _invoice_, an _expense_, a _credit_ or an _estimate_.
 
 #### Find documents
 ```php
