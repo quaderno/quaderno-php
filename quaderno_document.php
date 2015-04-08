@@ -8,7 +8,7 @@
 * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
 */
 
-/* Interface that implements every document: invoices, expenses, and estimates */
+/* Interface that implements every document: invoices, expenses, credits and estimates */
 abstract class QuadernoDocument extends QuadernoModel
 {
 	protected $payments_array = array();
