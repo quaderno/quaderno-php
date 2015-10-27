@@ -138,19 +138,19 @@ $webhooks = QuadernoWebhook::find('IDTOFIND');           // Returns a QuadernoWe
 ```php
 $webhook = new QuadernoWebhook(array(
                                  'url' => 'http://myapp.com/notifications',
-                                 'events' => array('created'));
+                                 'events_types' => array('contact.created'));
 
-$webhook->save();                             // Returns true (success) or false (error)
+$webhook->save();              // Returns true (success) or false (error)
 
 $webhook->url = "";
-$webhook->save();                             // Returns false - url is a required field
+$webhook->save();              // Returns false - url is a required field
 foreach($webhook->errors as $field => $errors) { 
   print "{$field}: ";
   foreach ($errors as $e) print $e;
 }
 
 $webhook->url = 'http://anotherapp.com/quaderno/notifications';
-$webhook->events = array('created', 'updated', 'deleted');
+$webhook->events_types = array('contact.created', 'contact.updated', 'contact.deleted');
 $webhook->save();
 ```
 
