@@ -19,8 +19,6 @@
     "ext-curl": "*"
   },
   "autoload": {
-    "psr-4": {
-      "Quaderno\\": ""
-    }
+    "files": ["quaderno_load.php"]
   }
 }
