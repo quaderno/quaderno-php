@@ -52,7 +52,7 @@ abstract class QuadernoDocument extends QuadernoModel
 	protected function execRemovePayment($payment)
 	{
 		$i = array_search($payment, $this->payments_array, true);
-		if ($i >= 0) $this->payments_array[$i]->markToDelete = true;
+		if ($i >= 0) $this->payments_array[$i]->mark_to_delete = true;
 		return ($i >= 0);
 	}
 

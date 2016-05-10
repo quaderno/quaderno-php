@@ -85,6 +85,7 @@ abstract class QuadernoModel extends QuadernoClass {
 		if (isset($this->payments_array) && count($this->payments_array))
 		{
 			foreach ($this->payments_array as $index => $p)
+			{
 				if (is_null($p->id))
 				{
 					// The payment does not have ID -> Not yet created
@@ -97,6 +98,7 @@ abstract class QuadernoModel extends QuadernoClass {
 					elseif (isset($response['data']['errors']))
 						$this->errors = $response['data']['errors'];
 				}
+
 				if ($p->mark_to_delete)
 				{
 					// The payment is marked to delete -> Let's do it.
@@ -106,7 +108,7 @@ abstract class QuadernoModel extends QuadernoClass {
 					elseif (isset($response['data']['errors']))
 						$this->errors = $response['data']['errors'];
 				}
-
+			}
 			/* If this object has received new data, let's update data field. */
 			if ($new_data) $this->data = $new_data->data;
 		}
