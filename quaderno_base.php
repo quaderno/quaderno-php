@@ -14,18 +14,21 @@ abstract class QuadernoBase
 
 	protected static $api_key = null;
 	protected static $api_url = null;
+	protected static $api_version = null;
 
-	public static function init($key, $url)
+	public static function init($key, $url, $version = null)
 	{
 		self::$api_key = $key;
 		self::$api_url = $url;
+		self::$api_version = $version;
+
 	}
 
 	public static function apiCall($method, $model, $id = '', $params = null, $data = null)
 	{
 		$url = self::$api_url.$model.($id != '' ? '/'.$id : '').'.json';
 		if (isset($params)) $url .= '?'.http_build_query($params);
-		return QuadernoJSON::exec($url, $method, self::$api_key, 'foo', $data);
+		return QuadernoJSON::exec($url, $method, self::$api_key, 'foo', self::$api_version, $data);
 	}
 
 	public static function ping()
