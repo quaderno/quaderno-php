@@ -21,7 +21,7 @@ require_once 'quaderno_load.php';
 
 ### Setup
 ```php
-QuadernoBase::init('YOUR_API_KEY', 'YOUR_API_URL');
+QuadernoBase::init('YOUR_API_KEY', 'YOUR_API_URL', API_VERSION); // API_VERSION is optional as it defaults to the account API version
 ```
 
 ### Testing connection

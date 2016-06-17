@@ -4,7 +4,7 @@
 *
 * Low level library to encode and decode messages using JSON
 * and sending those messages through HTTP with cURL
-* 
+*
 * @package   Quaderno PHP
 * @author    Quaderno <hello@quaderno.io>
 * @copyright Copyright (c) 2015, Quaderno
@@ -13,7 +13,7 @@
 
 abstract class QuadernoJSON
 {
-	public static function exec($url, $method, $username, $password, $data = null)
+	public static function exec($url, $method, $username, $password, $version = null, $data = null)
 	{
 		// Initialization
 		$ch = curl_init($url);
@@ -26,8 +26,11 @@ abstract class QuadernoJSON
 			CURLOPT_RETURNTRANSFER => true,																 // Accept answer
 			CURLOPT_USERPWD => $username.':'.$password,								 		 // User and password
 			CURLOPT_CUSTOMREQUEST => $method,															 // HTTP method to use
-			CURLOPT_HTTPHEADER => array('Content-type: application/json')	 // JSON headers
-			);
+			CURLOPT_HTTPHEADER => array(
+				'Content-type: application/json',
+				$version ? 'Accept: application/json; api_version='.$version : 'Accept: application/json'
+			)	 // JSON headers
+		);
 
 		if ($json) $options += array(CURLOPT_POSTFIELDS => $json);
 
