@@ -144,7 +144,7 @@ $webhook->save();              // Returns true (success) or false (error)
 
 $webhook->url = "";
 $webhook->save();              // Returns false - url is a required field
-foreach($webhook->errors as $field => $errors) { 
+foreach($webhook->errors as $field => $errors) {
   print "{$field}: ";
   foreach ($errors as $e) print $e;
 }
@@ -169,6 +169,19 @@ $tax->name;  // "VAT"
 $tax->rate;  // 21.0
 ```
 
+### Evidences
+```php
+$evidence = new QuadernoEvidence(array(
+                                        'document_id' => $invoice->id,
+                                        'billing_country' => $contact->country,
+                                        'ip_address' => '127.0.0.1',
+                                        'bank_country' => 'ES'));
+
+$evidence->save();              // Returns true (success) or false (error)
+```
+
+#### Creating a location evidence
+
 ### Items
 The items are those products or services that you sell to your customers.
 
@@ -192,7 +205,7 @@ $item->save();                             // Returns true (success) or false (e
 
 $item->name = "";
 $item->save();                             // Returns false - name is a required field
-foreach($item->errors as $field => $errors) { 
+foreach($item->errors as $field => $errors) {
   print "{$field}: ";
   foreach ($errors as $e) print $e;
 }
