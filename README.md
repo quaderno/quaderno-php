@@ -59,6 +59,14 @@ $contact->first_name = 'Joey';
 $contact->save();
 ```
 
+#### Retrieve a contact by payment gateway ID
+```php
+$gateway = 'stripe';
+$customer_id = 'cus_Av4LiDPayM3nt_ID';
+
+$contact = QuadernoContact::retrieve($id, $gateway); // returns a QuadernoContact (success) or false (error)
+```
+
 ### Documents
 A document is either an _invoice_, an _expense_, a _credit_ or an _estimate_.
 
@@ -75,6 +83,21 @@ Note: In order to looking up for number, contact name or P.O. number fields, you
 ```php
 $invoices = QuadernoInvoice::find(array('q' => $my_po_number));   // Search filtering 
 ```
+
+
+#### Retrieve a document by payment gateway ID
+```php
+$gateway = 'stripe'; 
+$payment_id = 'ch_Av4LiDPayM3nt_ID';
+$refund_id = 'ch_Av4LiDR3fuNd_ID';
+
+
+$invoice = QuadernoInvoice::retrieve($payment_id, $gateway); // returns a QuadernoInvoice (success) or false (error)
+
+$credit_note = QuadernoCredit::retrieve($refund_id, $gateway); // returns a QuadernoCredit (success) or false (error)
+
+```
+
 
 #### Create and update a document
 ```php
