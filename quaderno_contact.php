@@ -10,5 +10,16 @@
 
 class QuadernoContact extends QuadernoModel {
 	static protected $model = 'contacts';
+
+	public static function retrieve($id, $gateway)
+	{
+		$response = QuadernoBase::retrieve($id, 'customers', $gateway);
+		$return = false;
+
+		if (QuadernoBase::responseIsValid($response))
+			$return = new self($response['data']);
+
+		return $return;
+	}
 }
 ?>

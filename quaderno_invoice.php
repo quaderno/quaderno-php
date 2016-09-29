@@ -31,5 +31,16 @@ class QuadernoInvoice extends QuadernoDocument
 	{
 		return $this->execRemovePayment($payment);
 	}
+
+    public static function retrieve($id, $gateway)
+	{
+		$response = QuadernoBase::retrieve($id, 'charges', $gateway);
+		$return = false;
+
+		if (QuadernoBase::responseIsValid($response))
+			$return = new self($response['data']);
+
+		return $return;
+	}
 }
 ?>

@@ -71,6 +71,11 @@ abstract class QuadernoBase
 		return self::apiCall('GET', 'taxes', 'calculate', $params);
 	}
 
+	public static function retrieve($id, $model, $gateway = 'stripe')
+	{
+		return self::apiCall('GET', $gateway.'/'.$model, $id);
+	}
+
 	public static function saveNested($parentmodel, $parentid, $model, $data)
 	{
 		return self::save($parentmodel.'/'.$parentid.'/'.$model, $data, null);
