@@ -192,6 +192,17 @@ $tax->name;  // "VAT"
 $tax->rate;  // 21.0
 ```
 
+####  Validate VAT number
+
+```php
+$vat_number = array(
+  'country' => 'ES',
+  'vat_number' => 'ESA58818501'
+);
+
+QuadernoTax::validate_vat_number($vat_number);   // Returns boolean (true or false)
+```
+
 ### Evidences
 ```php
 $evidence = new QuadernoEvidence(array(
