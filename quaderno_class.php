@@ -9,7 +9,7 @@
 */
 
 /* Interface that implements every single class */
-abstract class QuadernoClass
+abstract class QuadernoClass implements \JsonSerializable
 {
 	protected $data = array();
 
@@ -33,5 +33,14 @@ abstract class QuadernoClass
 		return $this->data;
 	}
 
+	/**
+     * Specify data which should be serialized to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->data;
+    }
 }
 ?>
