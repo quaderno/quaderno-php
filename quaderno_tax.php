@@ -10,25 +10,25 @@
 
 class QuadernoTax extends QuadernoModel
 {
-	public static function calculate($params)
-	{
-		$response = QuadernoBase::calculate($params);
-		$return = false;
+  public static function calculate($params)
+  {
+    $response = QuadernoBase::calculate($params);
+    $return = false;
 
-		if (QuadernoBase::responseIsValid($response))
-			$return = new self($response['data']);
+    if (QuadernoBase::responseIsValid($response))
+      $return = new self($response['data']);
 
-		return $return;
-	}
-	public static function validate_vat_number($country, $vat_number)
-	{
-		$response = QuadernoBase::apiCall('GET', 'taxes', 'validate', array( 'country' => $country, 'vat_number' => $vat_number));
-		$return = false;
+    return $return;
+  }
+  public static function validate_vat_number($country, $vat_number)
+  {
+    $response = QuadernoBase::apiCall('GET', 'taxes', 'validate', array( 'country' => $country, 'vat_number' => $vat_number));
+    $return = false;
 
-		if (QuadernoBase::responseIsValid($response))
-			$return = $response['data']['valid'];
+    if (QuadernoBase::responseIsValid($response))
+      $return = $response['data']['valid'];
 
-		return $return;
-	}
+    return $return;
+  }
 }
 ?>
