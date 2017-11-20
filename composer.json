@@ -2,7 +2,7 @@
   "name": "quaderno/quaderno",
   "type": "library",
   "description": "PHP wrapper for the Quaderno REST API",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "keywords": ["billing","receipts", "invoices", "stripe", "paypal", "braintree", "gocardless", "vat", "gst"],
   "homepage": "https://github.com/quaderno/quaderno-php",
   "license": "MIT",
