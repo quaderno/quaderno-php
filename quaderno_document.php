@@ -33,8 +33,28 @@ abstract class QuadernoDocument extends QuadernoModel
 	public function addItem($item)
 	{
 		$length = isset($this->data['items_attributes']) ? count($this->data['items_attributes']) : 0;
-		$this->data['items_attributes'][$length] = $item->getArray();
-		return count($this->data['items_attributes']) == $length + 1;
+
+		if (isset($item->id) && $length > 0)
+		{
+			$index = 0;
+
+			for($index; $index < $length; $index ++){
+				if ($this->data['items_attributes'][$index]['id'] == $item->id) break;
+			}
+
+			$this->data['items_attributes'][$index] = $item->getArray();
+			return count($this->data['items_attributes']) == $length;
+		}
+		else
+		{
+			$this->data['items_attributes'][$length] = $item->getArray();
+			return count($this->data['items_attributes']) == $length + 1;
+		}
+	}
+
+	public function updateItem($item)
+	{
+		return $this->addItem(new QuadernoDocumentItem($item));
 	}
 
 	/* Interface - only subclasses which implement original ones (i.e. without exec-) can call these methods */

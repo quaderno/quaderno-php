@@ -113,13 +113,19 @@ abstract class QuadernoModel extends QuadernoClass {
 			if ($new_data) $this->data = $new_data->data;
 		}
 
+		$new_data = (isset($this->data['items_attributes']) && !$new_object);
+
 		/**
 		* 3rd step - Update object
 		* Update object - This is only necessary when it's not a new object, or new payments have been created.
 		*/
 		if (!$new_object || $new_data)
 		{
-			$response = QuadernoBase::save(static::$model, $this->data, $this->id);
+      $body_data = $this->data;
+
+			if (isset($this->items)) unset($body_data['items']);
+
+			$response = QuadernoBase::save(static::$model, $body_data, $this->id);
 
 			if (QuadernoBase::responseIsValid($response))
 			{

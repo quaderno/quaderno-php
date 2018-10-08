@@ -28,10 +28,10 @@ abstract class QuadernoClass implements \JsonSerializable
 		return array_key_exists($name, $this->data) ? $this->data[$name] : null;
 	}
 
-    public function __isset($name)
-    {
-        return array_key_exists($name, $this->data);
-    }
+  public function __isset($name)
+  {
+    return array_key_exists($name, $this->data);
+  }
 
 	protected function getArray()
 	{
