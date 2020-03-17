@@ -249,13 +249,43 @@ $item->tax_2_rate = '70.77';
 $item->save();
 ```
 
+### Webhooks
+
+#### Find webhooks
+Returns _false_ if request fails.
+```php
+$sessions = QuadernoCheckoutSession::find();                    // Returns an array of QuadernoCheckoutSession
+$sessions = QuadernoCheckoutSession::find('IDTOFIND');          // Returns a QuadernoCheckoutSession
+```
+
+#### Creating and updating a Checkout Session
+```php
+$session = new QuadernoCheckoutSession(array(
+                                 'cancel_url' => 'http://myapp.com/back',
+                                 'success_url' => 'http://myapp.com/thank-you',
+                                 'items' => array(array('product' => "prod_123456")));
+
+$session->save();              // Returns true (success) or false (error)
+
+$session->success_url = "";
+$session->save();              // Returns false - url is a required field
+foreach($session->errors as $field => $errors) {
+  print "{$field}: ";
+  foreach ($errors as $e) print $e;
+}
+
+$session->success_url = 'http://mapp.com/thank-you?product=xxxxx';
+$session->save();
+```
+
+
 ## More information
 Remember this is only a PHP wrapper for the original API. If you want more information about the API itself, head to the original [API documentation](https://github.com/quaderno/quaderno-api).
 
 ## License
 (The MIT License)
 
-Copyright © 2013-2015 Quaderno
+Copyright © 2013-2020 Quaderno
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
