@@ -20,6 +20,7 @@ require_once $quaderno_script_path.'quaderno_base.php';
 require_once $quaderno_script_path.'quaderno_contact.php';
 require_once $quaderno_script_path.'quaderno_item.php';
 require_once $quaderno_script_path.'quaderno_evidence.php';
+require_once $quaderno_script_path.'quaderno_checkout_session.php';
 require_once $quaderno_script_path.'quaderno_document.php';
 require_once $quaderno_script_path.'quaderno_expense.php';
 require_once $quaderno_script_path.'quaderno_estimate.php';
