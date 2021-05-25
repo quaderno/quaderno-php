@@ -68,7 +68,7 @@ abstract class QuadernoBase
 
 	public static function calculate($params)
 	{
-		return self::apiCall('GET', 'taxes', 'calculate', $params);
+		return self::apiCall('GET', 'tax_rates', 'calculate', $params);
 	}
 
 	public static function retrieve($id, $model, $gateway = 'stripe')
