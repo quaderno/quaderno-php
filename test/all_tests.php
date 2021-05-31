@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../quaderno_load.php');
 class AllTests extends TestSuite {
   # please use your own api_key and subdomain
   const API_KEY = 'sk_test_7oEdy3CW5z8QzwgCk4hp';
-  const API_URL = 'http://assur-5845.lvh.me:3000/api/';
+  const API_URL = 'http://sandbox-quadernoapp.com/api/';
 
   function __construct() {
     parent::__construct();
