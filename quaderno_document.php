@@ -3,12 +3,12 @@
 * Quaderno Document
 *
 * @package   Quaderno PHP
-* @author    Quaderno <hello@quaderno.io>
-* @copyright Copyright (c) 2017, Quaderno
+* @author    Quaderno <support@quaderno.io>
+* @copyright Copyright (c) 2021, Quaderno
 * @license   https://opensource.org/licenses/MIT The MIT License
 */
 
-/* Interface that implements every document: invoices, expenses, credits and estimates */
+/* Interface that implements every document: invoices, expenses, credit notes, and estimates */
 abstract class QuadernoDocument extends QuadernoModel
 {
 	protected $payments_array = array();

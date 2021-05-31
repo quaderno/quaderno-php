@@ -1,34 +1,36 @@
 <?php
 require_once(dirname(__FILE__) . '/../../quaderno_load.php');
 
-class ItemTest extends UnitTestCase { 
+class ItemTest extends UnitTestCase {
   function __construct() {
-  }  
+  }
 
   // Search last items
   function testFindItemsReturnsArray() {
-    $this->assertTrue(is_array(QuadernoItem::find()));
+    $this->assertTrue(is_array(QuadernoProduct::find()));
   }
 
   // Search by ID
   function testFindItemWithInvalidIdReturnsFalse() {
-    $this->assertFalse(QuadernoItem::find("0"));
+    $this->assertFalse(QuadernoProduct::find("0"));
   }
 
   function testFindItemWithIdReturnsAnItem() {
-    $item = new QuadernoItem(array(
+    $item = new QuadernoProduct(array(
+                                 'code' => 'SPACE9999',
                                  'name' => 'Space meatballs',
                                  'unit_cost' => '21.00'));
     $this->assertTrue($item->save());
-    $this->assertClone(QuadernoItem::find($item->id), $item);
+    $this->assertClone(QuadernoProduct::find($item->id), $item);
     $id = $item->id;
     $this->assertTrue($item->delete());
     $this->assertNull($item->id);
-    $this->assertFalse(QuadernoItem::find($id));
+    $this->assertFalse(QuadernoProduct::find($id));
   }
 
   function testCreatingAndModifyingItem() {
-    $item = new QuadernoItem(array(
+    $item = new QuadernoProduct(array(
+                                 'code' => 'SPACE9999',
                                  'name' => 'Umbrella juice',
                                  'unit_cost' => '35.00'));
     $this->assertTrue($item->save());

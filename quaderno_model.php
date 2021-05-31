@@ -5,8 +5,8 @@
 * Interface for every model
 *
 * @package   Quaderno PHP
-* @author    Quaderno <hello@quaderno.io>
-* @copyright Copyright (c) 2017, Quaderno
+* @author    Quaderno <support@quaderno.io>
+* @copyright Copyright (c) 2021, Quaderno
 * @license   https://opensource.org/licenses/MIT The MIT License
 */
 
@@ -15,7 +15,7 @@ abstract class QuadernoModel extends QuadernoClass {
 	*  Find for QuadernoModel objects
 	* If $params is a single value, it returns a single object
 	* If $params is null or an array, it returns an array of objects
-	* When request fails, it returns false 
+	* When request fails, it returns false
 	*/
 	public static function find($params = array('page' => 1))
 	{
@@ -56,7 +56,7 @@ abstract class QuadernoModel extends QuadernoClass {
 		$return = false;
 
 		/**
-		* 1st step - New object to be created 
+		* 1st step - New object to be created
 		* Check if the current object has not been created yet
 		*/
 		if (is_null($this->id))
