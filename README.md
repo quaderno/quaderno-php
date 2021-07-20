@@ -71,9 +71,9 @@ A contact is any customer or vendor who appears on your invoices, credit notes, 
 Returns _false_ if request fails.
 
 ```php
-$contacts = QuadernoContact::find();                    // returns an array of QuadernoContact
-$contacts = QuadernoContact::find(array('page' => 2));  // returns an array of QuadernoContact
-$contact = QuadernoContact::find('ID_TO_FIND');           // returns a QuadernoContact
+$contacts = QuadernoContact::find();                              // returns an array of QuadernoContact
+$contacts = QuadernoContact::find(array('created_before' => 2));  // returns an array of QuadernoContact
+$contact = QuadernoContact::find('ID_TO_FIND');                   // returns a QuadernoContact
 ```
 
 #### Creating and updating a contact
@@ -181,9 +181,9 @@ A billing document is either an _invoice_, an _expense_, a _credit_ or an _estim
 #### Find documents
 
 ```php
-$invoices = QuadernoInvoice::find();                      // returns an array of QuadernoInvoice
-$invoices = QuadernoInvoice::find(array('page' => 2));    // returns an array of QuadernoInvoice
-$invoice = QuadernoInvoice::find('ID_TO_FIND');           // returns a QuadernoInvoice
+$invoices = QuadernoInvoice::find();                              // returns an array of QuadernoInvoice
+$invoices = QuadernoInvoice::find(array('created_before' => 2));  // returns an array of QuadernoInvoice
+$invoice = QuadernoInvoice::find('ID_TO_FIND');                   // returns a QuadernoInvoice
 ```
 
 Note: In order to looking up for number, contact name or P.O. number fields, you must set the 'q' param in the params array.
