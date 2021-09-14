@@ -33,12 +33,30 @@ QuadernoBase::init('YOUR_API_KEY', 'YOUR_API_URL', API_VERSION); // API_VERSION 
 QuadernoBase::ping();   // returns true (success) or false (error)
 ```
 
+### Pagination
+
+⚠️ There's a known limitation on the current version of the PHP wrapper which does not allow to easily inspect response headers, like the ones used to facilitate pagination from version [20210316](https://developers.quaderno.io/api/#safely-upgrading-to-api-version-20210316) (`X-Pages-NextPage` and `X-Pages-HasMore`). For now, you can workaround that either by playing with more requests with smaller data ranges and higher `limit` to fetch more docs (max 100); or fetch your first find data with any query and then perform another paginated request with the `created_before` parameter and the ID of the last returned document, until the response is empty.
+
+```php
+// Simple example to request all pages from the given dates until all invoices have been returned:
+$invoices = [];
+$filters['limit'] = '50'; // bunches of 50 invoices per request
+$filters['date']= "$from,$to"; // please use dates to avoid always getting all invoices
+do {
+  $data = QuadernoInvoice::find($filters);
+  if (is_array($data) && !empty($data)) {
+    $invoices = array_merge($invoices, $data);
+    $last_invoice = end($data); // advances array's internal pointer to the last element, and returns its value
+    $filters['created_before'] = $last_invoice->id; // paginate from there
+  }
+} while (!empty($data));
+```
 
 ### Taxes
 Quaderno allows you to calculate tax rates and validate tax IDs.
 
 ####  Calculating taxes
-Check our [API docs](https://developers.quaderno.io/api/#calculate-a-tax-rate) to know all valid parameters.
+Check our [API docs](https://developers.quaderno.io/api/#calculating-a-tax-rate) to know all valid parameters.
 
 ```php
 $params = array(
