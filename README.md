@@ -11,7 +11,7 @@ You will need this if you want to connect to the Quaderno API from your PHP app 
 * [cURL](http://php.net/manual/en/book.curl.php) (included by default in recent PHP versions)
 
 ## Installation
-Copy all the files into a single folder in your project
+Install via [Composer](https://packagist.org/packages/quaderno/quaderno), or just copy all the files into a single folder in your project.
 
 ## Usage
 A rule of thumb to take into account when using the wrapper is that calls to the API are actually only made with the methods: '_find()_', '_save()_', '_delete()_', '_deliver()_' and '_ping()_'.
