@@ -17,6 +17,7 @@ class AllTests extends TestSuite {
     $this->addFile(dirname(__FILE__) . '/unit/expense_test.php');
     $this->addFile(dirname(__FILE__) . '/unit/estimate_test.php');
     $this->addFile(dirname(__FILE__) . '/unit/payment_test.php');
+    $this->addFile(dirname(__FILE__) . '/unit/tax_rate_test.php');
   }
 }
 ?>

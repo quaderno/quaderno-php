@@ -78,4 +78,28 @@ abstract class QuadernoBase
 	{
 		return isset($response) && !$response['error'] && (int)($response['http_code'] / 100) == 2;
 	}
+
+    /**
+     * @return null|string
+     */
+    public static function getApiKey()
+    {
+        return self::$api_key;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getApiUrl()
+    {
+        return self::$api_url;
+    }
+
+    /**
+     * @return null|string
+     */
+    public static function getApiVersion()
+    {
+        return self::$api_version;
+    }
 }
