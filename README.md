@@ -67,6 +67,23 @@ $params = array(
 $tax = QuadernoTaxRate::calculate($params);   // returns a QuadernoTax
 $tax->name;  // 'IVA'
 $tax->rate;  // 21.0
+
+
+// A non-processable request (due to invalid data, outages, etc.) returns false boolean
+QuadernoBase::init('fakeApiKey', 'https://fake-subdomain.quadernoapp.com/api/');
+
+$tax = QuadernoTaxRate::calculate($params);
+$tax // false
+
+// Example using a callback to get the specific error response
+$tax = QuadernoTaxRate::calculate($params, function($apiErrorResponse) use (&$errorResponse) {
+  $errorResponse = $apiErrorResponse;
+});
+
+$tax; // false
+$errorResponse['http_code']; // 401
+$errorResponse['data']['error']; // "Wrong API key or the user does not exist."
+
 ```
 
 #### Validate tax ID

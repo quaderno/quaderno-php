@@ -21,7 +21,7 @@ class QuadernoTaxRate extends QuadernoModel
     }
 
     if (is_callable($errorCallback)) {
-      $errorCallback($response['format_error']);
+      $errorCallback($response);
     }
 
     return $return;
