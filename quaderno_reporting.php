@@ -10,14 +10,19 @@
 
 class QuadernoReporting extends QuadernoModel
 {
-  public static function requests($params) {
-    $return = false;
-    $response = QuadernoBase::apiCall('POST', 'reporting', 'requests', $params);
+	/**
+	 * @param array|null $params
+	 *
+	 * @return bool
+	 */
+	public static function requests($params) {
+		$return = false;
+		$response = QuadernoBase::apiCall('POST', 'reporting', 'requests', $params);
 
-    if (QuadernoBase::responseIsValid($response))
-      $return = $response['data']['valid'];
+		if (QuadernoBase::responseIsValid($response))
+			$return = $response['data']['valid'];
 
-    return $return;
-  }
+		return $return;
+	}
 }
 ?>

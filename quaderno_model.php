@@ -12,11 +12,15 @@
 
 abstract class QuadernoModel extends QuadernoClass {
 	/**
-	*  Find for QuadernoModel objects
-	* If $params is a single value, it returns a single object
-	* If $params is null or an array, it returns an array of objects
-	* When request fails, it returns false
-	*/
+	 *  Find for QuadernoModel objects
+	 * If $params is a single value, it returns a single object
+	 * If $params is null or an array, it returns an array of objects
+	 * When request fails, it returns false
+	 *
+	 * @param string|array|null $params
+	 *
+	 * @return static|static[]|false
+	 */
 	public static function find($params = array('page' => 1))
 	{
 		$return = false;
@@ -45,10 +49,12 @@ abstract class QuadernoModel extends QuadernoClass {
 	}
 
 	/**
-	* Save for QuadernoModel objects
-	* Export object data to the model
-	* Returns true or false whether the request is accepted or not
-	*/
+	 * Save for QuadernoModel objects
+	 * Export object data to the model
+	 * Returns true or false whether the request is accepted or not
+	 *
+	 * @return bool
+	 */
 	public function save()
 	{
 		$response = null;
@@ -119,7 +125,7 @@ abstract class QuadernoModel extends QuadernoClass {
 		*/
 		if (!$new_object || $new_data)
 		{
-      $body_data = $this->data;
+			$body_data = $this->data;
 
 			if (isset($this->items)) unset($body_data['items']);
 
@@ -138,10 +144,12 @@ abstract class QuadernoModel extends QuadernoClass {
 	}
 
 	/**
-	* Delete for QuadernoModel objects
-	* Delete object from the model
-	* Returns true or false whether the request is accepted or not
-	*/
+	 * Delete for QuadernoModel objects
+	 * Delete object from the model
+	 * Returns true or false whether the request is accepted or not
+	 *
+	 * @return bool
+	 */
 	public function delete()
 	{
 		$return = false;

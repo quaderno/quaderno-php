@@ -13,6 +13,16 @@
 
 abstract class QuadernoJSON
 {
+	/**
+	 * @param string $url
+	 * @param string $method
+	 * @param string $username
+	 * @param string $password
+	 * @param string|null $version
+	 * @param array|null $data
+	 *
+	 * @return array
+	 */
 	public static function exec($url, $method, $username, $password, $version = null, $data = null)
 	{
 		// Initialization

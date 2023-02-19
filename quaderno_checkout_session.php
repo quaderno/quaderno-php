@@ -10,6 +10,6 @@
 
 class QuadernoCheckoutSession extends QuadernoModel
 {
-  static protected $model = 'checkout/sessions';
+	static protected $model = 'checkout/sessions';
 }
 ?>

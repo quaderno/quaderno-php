@@ -12,27 +12,49 @@ class QuadernoInvoice extends QuadernoDocument
 {
 	static protected $model = 'invoices';
 
+	/**
+	 * @return bool
+	 */
 	public function deliver()
 	{
 		return $this->execDeliver();
 	}
 
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	public function addPayment($payment)
 	{
 		return $this->execAddPayment($payment);
 	}
 
+	/**
+	 * @return QuadernoPayment[]
+	 */
 	public function getPayments()
 	{
 		return $this->execGetPayments();
 	}
 
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	public function removePayment($payment)
 	{
 		return $this->execRemovePayment($payment);
 	}
 
-  public static function retrieve($id, $gateway)
+	/**
+	 * @param string $id
+	 * @param string $gateway
+	 *
+	 * @return false|QuadernoInvoice
+	 */
+	public static function retrieve($id, $gateway)
 	{
 		$response = QuadernoBase::retrieve($id, 'charges', $gateway);
 		$return = false;

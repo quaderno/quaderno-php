@@ -13,6 +13,9 @@ abstract class QuadernoDocument extends QuadernoModel
 {
 	protected $payments_array = array();
 
+	/**
+	 * @param array $newdata
+	 */
 	public function __construct($newdata)
 	{
 		parent::__construct($newdata);
@@ -23,6 +26,11 @@ abstract class QuadernoDocument extends QuadernoModel
 		}
 	}
 
+	/**
+	 * @param QuadernoContact $contact
+	 *
+	 * @return bool
+	 */
 	public function addContact($contact)
 	{
 		$this->data['contact_id'] = $contact->id;
@@ -30,6 +38,11 @@ abstract class QuadernoDocument extends QuadernoModel
 		return isset($this->data['contact_id']) && isset($this->data['contact_name']);
 	}
 
+	/**
+	 * @param QuadernoDocumentItem $item
+	 *
+	 * @return bool
+	 */
 	public function addItem($item)
 	{
 		$length = isset($this->data['items_attributes']) ? count($this->data['items_attributes']) : 0;
@@ -52,23 +65,46 @@ abstract class QuadernoDocument extends QuadernoModel
 		}
 	}
 
+	/**
+	 * @param array|QuadernoDocumentItem $item
+	 *
+	 * @return bool
+	 */
 	public function updateItem($item)
 	{
-		return $this->addItem(new QuadernoDocumentItem($item));
+		if (is_array($item)) {
+			$item = new QuadernoDocumentItem($item);
+		}
+
+		return $this->addItem($item);
 	}
 
-	/* Interface - only subclasses which implement original ones (i.e. without exec-) can call these methods */
+	/**
+	 * Interface - only subclasses which implement original ones (i.e. without exec-) can call these methods
+	 *
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	protected function execAddPayment($payment)
 	{
 		$length = count($this->payments_array);
 		return array_push($this->payments_array, $payment) == $length + 1;
 	}
 
+	/**
+	 * @return QuadernoPayment[]
+	 */
 	protected function execGetPayments()
 	{
 		return $this->payments_array;
 	}
 
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	protected function execRemovePayment($payment)
 	{
 		$i = array_search($payment, $this->payments_array, true);
@@ -77,10 +113,12 @@ abstract class QuadernoDocument extends QuadernoModel
 	}
 
 	/**
-	* Deliver call for QuadernoDocument objects
-	* Deliver object to the contact email
-	* Returns true or false whether the request is accepted or not
-	*/
+	 * Deliver call for QuadernoDocument objects
+	 * Deliver object to the contact email
+	 * Returns true or false whether the request is accepted or not
+	 *
+	 * @return bool
+	 */
 	protected function execDeliver()
 	{
 		$return = false;

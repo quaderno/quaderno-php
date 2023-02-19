@@ -10,6 +10,6 @@
 
 class QuadernoRecurring extends QuadernoDocument
 {
-  static protected $model = 'recurring';
+	static protected $model = 'recurring';
 }
 ?>

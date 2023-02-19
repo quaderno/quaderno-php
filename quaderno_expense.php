@@ -12,16 +12,29 @@ class QuadernoExpense extends QuadernoDocument
 {
 	static protected $model = 'expenses';
 
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	public function addPayment($payment)
 	{
 		return $this->execAddPayment($payment);
 	}
 
+	/**
+	 * @return QuadernoPayment[]
+	 */
 	public function getPayments()
 	{
 		return $this->execGetPayments();
 	}
 
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
 	public function removePayment($payment)
 	{
 		return $this->execRemovePayment($payment);

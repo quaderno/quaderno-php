@@ -10,37 +10,59 @@
 
 class QuadernoCredit extends QuadernoDocument
 {
-  static protected $model = 'credits';
+	static protected $model = 'credits';
 
-  public function deliver()
-  {
-    return $this->execDeliver();
-  }
+	/**
+	 * @return bool
+	 */
+	public function deliver()
+	{
+		return $this->execDeliver();
+	}
 
-  public function addPayment($payment)
-  {
-    return $this->execAddPayment($payment);
-  }
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
+	public function addPayment($payment)
+	{
+		return $this->execAddPayment($payment);
+	}
 
-  public function getPayments()
-  {
-    return $this->execGetPayments();
-  }
+	/**
+	 * @return QuadernoPayment[]
+	 */
+	public function getPayments()
+	{
+		return $this->execGetPayments();
+	}
 
-  public function removePayment($payment)
-  {
-    return $this->execRemovePayment($payment);
-  }
+	/**
+	 * @param QuadernoPayment $payment
+	 *
+	 * @return bool
+	 */
+	public function removePayment($payment)
+	{
+		return $this->execRemovePayment($payment);
+	}
 
-  public static function retrieve($id, $gateway)
-  {
-    $response = QuadernoBase::retrieve($id, 'refunds', $gateway);
-    $return = false;
+	/**
+	 * @param string $id
+	 * @param string $gateway
+	 *
+	 * @return false|QuadernoCredit
+	 */
+	public static function retrieve($id, $gateway)
+	{
+		$response = QuadernoBase::retrieve($id, 'refunds', $gateway);
+		$return = false;
 
-    if (QuadernoBase::responseIsValid($response))
-      $return = new self($response['data']);
+		if (QuadernoBase::responseIsValid($response))
+			$return = new self($response['data']);
 
-    return $return;
-  }
+		return $return;
+	}
 }
 ?>

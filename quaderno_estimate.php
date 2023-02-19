@@ -12,6 +12,9 @@ class QuadernoEstimate extends QuadernoDocument
 {
 	static protected $model = 'estimates';
 
+	/**
+	 * @return bool
+	 */
 	public function deliver()
 	{
 		return $this->execDeliver();

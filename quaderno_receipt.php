@@ -10,11 +10,14 @@
 
 class QuadernoReceipt extends QuadernoDocument
 {
-  static protected $model = 'receipts';
+	static protected $model = 'receipts';
 
-  public function deliver()
-  {
-    return $this->execDeliver();
-  }
+	/**
+	 * @return bool
+	 */
+	public function deliver()
+	{
+		return $this->execDeliver();
+	}
 }
 ?>
