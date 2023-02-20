@@ -10,16 +10,21 @@
 
 class QuadernoTaxId extends QuadernoModel
 {
-  static protected $model = 'tax_ids';
+	static protected $model = 'tax_ids';
 
-  public static function validate($params) {
-    $return = false;
-    $response = QuadernoBase::apiCall('GET', 'tax_ids', 'validate', $params);
+	/**
+	 * @param array|null $params
+	 *
+	 * @return bool
+	 */
+	public static function validate($params) {
+		$return = false;
+		$response = QuadernoBase::apiCall('GET', 'tax_ids', 'validate', $params);
 
-    if (QuadernoBase::responseIsValid($response))
-      $return = $response['data']['valid'];
+		if (QuadernoBase::responseIsValid($response))
+			$return = $response['data']['valid'];
 
-    return $return;
-  }
+		return $return;
+	}
 }
 ?>

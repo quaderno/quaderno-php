@@ -10,17 +10,20 @@
 
 class QuadernoTransaction extends QuadernoDocument
 {
-  static protected $model = 'transactions';
+	static protected $model = 'transactions';
 
-  public function deliver() {
-    $document = unserialize(sprintf(
-      'O:%d:"%s"%s',
-      strlen('Quaderno'. $this->type),
-      'Quaderno' . $this->type,
-      strstr(strstr(serialize($this), '"'), ':')
-      ));
+	/**
+	 * @return bool
+	 */
+	public function deliver() {
+		$document = unserialize(sprintf(
+			'O:%d:"%s"%s',
+			strlen('Quaderno'. $this->type),
+			'Quaderno' . $this->type,
+			strstr(strstr(serialize($this), '"'), ':')
+		));
 
-    return $document->execDeliver();
-  }
+		return $document->execDeliver();
+	}
 }
 ?>

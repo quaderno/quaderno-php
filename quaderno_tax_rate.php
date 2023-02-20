@@ -10,29 +10,36 @@
 
 class QuadernoTaxRate extends QuadernoModel
 {
-  static protected $model = 'tax_rates';
+	static protected $model = 'tax_rates';
+	static protected $error = null;
 
-  public static function calculate($params, $errorCallback = null) {
-    $return = false;
-    $response = QuadernoBase::apiCall('GET', 'tax_rates', 'calculate', $params);
+	/**
+	 * @param array|null $params
+	 * @param callable|null $errorCallback
+	 *
+	 * @return false|QuadernoTaxRate
+	 */
+	public static function calculate($params, $errorCallback = null) {
+		$return = false;
+		$response = QuadernoBase::apiCall('GET', 'tax_rates', 'calculate', $params);
 
-    if (QuadernoBase::responseIsValid($response)) {
-      $return = new self($response['data']);
-    }
+		if (QuadernoBase::responseIsValid($response)) {
+			$return = new self($response['data']);
+		}
 
-    if (is_callable($errorCallback)) {
-      $errorCallback($response);
-    }
+		if (is_callable($errorCallback)) {
+			$errorCallback($response);
+		}
 
-    return $return;
-  }
+		return $return;
+	}
 
-  /**
-   * @return string
-   */
-  public static function getError()
-  {
-    return self::$error;
-  }
+	/**
+	 * @return string|null
+	 */
+	public static function getError()
+	{
+		return self::$error;
+	}
 }
 ?>
