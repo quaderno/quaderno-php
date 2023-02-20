@@ -2,7 +2,7 @@
   "name": "quaderno/quaderno",
   "type": "library",
   "description": "PHP wrapper for the Quaderno REST API",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "keywords": ["tax", "vat", "gst", "sales tax", "tax calculation", "billing","receipts", "invoices", "credit notes"],
   "homepage": "https://github.com/quaderno/quaderno-php",
   "license": "MIT",
