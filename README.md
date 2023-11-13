@@ -1,10 +1,7 @@
 # PHP Wrapper for Quaderno API
-This library is a PHP wrapper to connect and handle the [Quaderno API](https://developers.quaderno.io/api/) in a nicer way. It connects to your PHP app with [Quaderno](https://quaderno.io), so you will need to have a valid Quaderno account to use it.
+This library is a PHP wrapper to connect and handle the [Quaderno API](https://developers.quaderno.io/api/) in a nicer way.
 
-You can use our [sandbox environment](https://sandbox-quadernoapp.com/) to test your processes before going live.
-
-## Why using it?
-You will need this if you want to connect to the Quaderno API from your PHP app with no need to be handling annoying low-level HTTP requests and JSON-encoded data.
+A Quaderno account is needed for using it. You can [sign up for a free trial](https://quadernoapp.com/signup) or use our [sandbox environment](https://developers.quaderno.io/tools/sandbox/) to test your integration before going live.
 
 ## Requirements
 * PHP 5 or higher
@@ -15,6 +12,8 @@ Install via [Composer](https://packagist.org/packages/quaderno/quaderno), or jus
 
 ## Usage
 A rule of thumb to take into account when using the wrapper is that calls to the API are actually only made with the methods: '_find()_', '_save()_', '_delete()_', '_deliver()_' and '_ping()_'.
+
+> To obtain correct tax calculations, it's key to set your account defaults correctly. Tax calculation API calls infer any parameter not explicitly set in the call from your account configuration. Check https://developers.quaderno.io/guides/tax-calculations to learn more.
 
 ### Load
 ```php
