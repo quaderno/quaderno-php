@@ -20,6 +20,7 @@ abstract class QuadernoModel extends QuadernoClass {
 	 * @param string|array|null $params
 	 *
 	 * @return static|static[]|false
+	 * @phpstan-return ($params is string ? static|false : static[]|false)
 	 */
 	public static function find($params = array('page' => 1))
 	{
