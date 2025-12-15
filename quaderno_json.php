@@ -52,7 +52,9 @@ abstract class QuadernoJSON
 		$result['error'] = curl_errno($ch);
 		$result['format_error'] = curl_error($ch);
 		$result += curl_getinfo($ch);
-		curl_close($ch);
+		if (PHP_VERSION_ID < 80500) {
+			curl_close($ch);
+		}
 
 		// Decode data
 		if ($result['data'])
