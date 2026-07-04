@@ -14,6 +14,7 @@ abstract class QuadernoBase
 	protected static $api_key = null;
 	protected static $api_url = null;
 	protected static $api_version = null;
+	protected static $timeout = 30;
 
 	/**
 	 * @param string $key
@@ -30,6 +31,24 @@ abstract class QuadernoBase
 	}
 
 	/**
+	 * @param int $timeout Total request timeout in seconds (0 = unlimited, not recommended)
+	 *
+	 * @return void
+	 */
+	public static function setTimeout(int $timeout): void
+	{
+		self::$timeout = $timeout;
+	}
+
+	/**
+	 * @return int
+	 */
+	public static function getTimeout(): int
+	{
+		return self::$timeout;
+	}
+
+	/**
 	 * @param string $method
 	 * @param string $model
 	 * @param string $id
@@ -42,7 +61,7 @@ abstract class QuadernoBase
 	{
 		$url = self::$api_url . $model . ($id != '' ? '/' . $id : '') . '.json';
 		if (isset($params)) $url .= '?'.http_build_query($params);
-		return QuadernoJSON::exec($url, $method, self::$api_key, 'foo', self::$api_version, $data);
+		return QuadernoJSON::exec($url, $method, self::$api_key, 'foo', self::$api_version, $data, self::$timeout);
 	}
 
 	/**

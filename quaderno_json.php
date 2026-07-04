@@ -23,7 +23,7 @@ abstract class QuadernoJSON
 	 *
 	 * @return array
 	 */
-	public static function exec($url, $method, $username, $password, $version = null, $data = null)
+	public static function exec($url, $method, $username, $password, $version = null, $data = null, $timeout = 30)
 	{
 		// Initialization
 		$ch = curl_init($url);
@@ -36,6 +36,8 @@ abstract class QuadernoJSON
 			CURLOPT_RETURNTRANSFER => true,																 // Accept answer
 			CURLOPT_USERPWD => $username.':'.$password,								 		 // User and password
 			CURLOPT_CUSTOMREQUEST => $method,															 // HTTP method to use
+			CURLOPT_CONNECTTIMEOUT => min($timeout, 10),
+			CURLOPT_TIMEOUT => $timeout,
 			CURLOPT_HTTPHEADER => array(
 				'Content-type: application/json',
 				$version ? 'Accept: application/json; api_version='.$version : 'Accept: application/json'
